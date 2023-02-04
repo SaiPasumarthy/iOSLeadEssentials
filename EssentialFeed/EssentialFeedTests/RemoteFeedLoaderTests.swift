@@ -20,6 +20,7 @@ class RemoteFeedLoader {
         client.get(from: url)
     }
 }
+#warning("Benifit of being protocol is, don't need to create new type to confirm to it. We can create easily extension on URLSession conform to protocol")
 protocol HTTPClient {
     func get(from url: URL)
 }
