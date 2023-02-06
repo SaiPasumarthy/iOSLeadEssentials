@@ -12,16 +12,21 @@ import Foundation
 public final class RemoteFeedLoader {
     private let url: URL
     private let client: HTTPClient
+    public enum Error: Swift.Error {
+        case connectivity
+    }
     public init(url: URL, client: HTTPClient) {
         self.url = url
         self.client = client
     }
     #warning("URL is detail implementation and shouldn't be in public interface. But the doubt is how does every client of RemoteFeedLoader know of url to request data from")
-    public func load() {
-        client.get(from: url)
+    public func load(completion: @escaping (Error) -> Void = {_ in}) {
+        client.get(from: url) { error in
+            completion(.connectivity)
+        }
     }
 }
 #warning("Benifit of being protocol is, don't need to create new type to confirm to it. We can create easily extension on URLSession conform to protocol")
 public protocol HTTPClient {
-    func get(from url: URL)
+    func get(from url: URL, completion: @escaping (Error) -> Void)
 }
