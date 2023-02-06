@@ -20,7 +20,7 @@ public final class RemoteFeedLoader {
         self.client = client
     }
     #warning("URL is detail implementation and shouldn't be in public interface. But the doubt is how does every client of RemoteFeedLoader know of url to request data from")
-    public func load(completion: @escaping (Error) -> Void = {_ in}) {
+    public func load(completion: @escaping (Error) -> Void) {
         client.get(from: url) { error in
             completion(.connectivity)
         }
