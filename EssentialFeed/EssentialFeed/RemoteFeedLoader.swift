@@ -17,14 +17,14 @@ public final class RemoteFeedLoader: FeedLoader {
         case invalidData
     }
 
-    public typealias Result = LoadFeedResult<Error>
+    public typealias Result = LoadFeedResult
 
     public init(url: URL, client: HTTPClient) {
         self.url = url
         self.client = client
     }
 #warning("URL is detail implementation and shouldn't be in public interface. But the doubt is how does every client of RemoteFeedLoader know of url to request data from")
-    public func loadFeed(completion: @escaping (LoadFeedResult<Error>) -> Void) {
+    public func load(completion: @escaping (Result) -> Void) {
         client.get(from: url) { [weak self] result in
             guard self != nil else { return }
             
@@ -32,7 +32,7 @@ public final class RemoteFeedLoader: FeedLoader {
             case .success(let data, let response):
                 completion(FeedItemMapper.map(data, from: response))
             case .failure:
-                completion(.failure(.connectivity))
+                completion(.failure(Error.connectivity))
             }
         }
     }    
