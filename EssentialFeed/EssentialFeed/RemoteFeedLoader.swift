@@ -9,7 +9,7 @@ import Foundation
 
 #warning("How client of RemoteFeedLoader doesn't knows about HTTPClient when it dependancy injects through init")
 #warning("Who is the client of RemoteFeedLoader? Is it whoever instantiate the RemoteFeedLoader class?")
-public final class RemoteFeedLoader {
+public final class RemoteFeedLoader: FeedLoader {
     private let url: URL
     private let client: HTTPClient
     public enum Error: Swift.Error {
