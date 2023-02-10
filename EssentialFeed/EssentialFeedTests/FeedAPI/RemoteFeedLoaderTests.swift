@@ -21,7 +21,7 @@ class RemoteFeedLoaderTests: XCTestCase {
         let url = URL(string: "https://a-url-given.com")!
         let (sut, client) = makeSUT(url: url)
         
-        sut.load { _ in }
+        sut.loadFeed { _ in }
         
         XCTAssertEqual(client.requestedURLs, [url])
     }
@@ -30,8 +30,8 @@ class RemoteFeedLoaderTests: XCTestCase {
         let url = URL(string: "https://a-url-given.com")!
         let (sut, client) = makeSUT(url: url)
         
-        sut.load { _ in }
-        sut.load { _ in }
+        sut.loadFeed { _ in }
+        sut.loadFeed { _ in }
         
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
@@ -92,7 +92,7 @@ class RemoteFeedLoaderTests: XCTestCase {
         var sut: RemoteFeedLoader? = RemoteFeedLoader(url: url, client: client)
        
         var capturedResult = [RemoteFeedLoader.Result]()
-        sut?.load(completion: { capturedResult.append($0) })
+        sut?.loadFeed(completion: { capturedResult.append($0) })
         
         sut = nil
         client.complete(withStatusCode: 200, data: makeItemsJSON([]))
@@ -115,13 +115,27 @@ class RemoteFeedLoaderTests: XCTestCase {
         }
     }
     
-    private func expect(_ sut: RemoteFeedLoader, toCompleteWithResult result: RemoteFeedLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
-        var capturedResult = [RemoteFeedLoader.Result]()
-        sut.load { capturedResult.append($0) }
+    private func expect(_ sut: RemoteFeedLoader, toCompleteWithResult expectedResult: RemoteFeedLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+        
+        #warning("Why this expectation is required without this also tests are working fine")
+        let expectation = expectation(description: "Wait for load completion")
+        
+        sut.loadFeed { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedItems), .success(expectedItems)):
+                XCTAssertEqual(receivedItems, expectedItems, file: file, line: line)
+            case let (.failure(receivedError), .failure(expectedError)):
+                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+
+            default:
+                XCTFail("Expected result \(expectedResult) got \(receivedResult) instead.", file: file, line: line)
+            }
+            expectation.fulfill()
+        }
         
         action()
         
-        XCTAssertEqual(capturedResult, [result], file: file, line: line)
+        wait(for: [expectation], timeout: 1.0)
     }
     
     private func makeItem(id: UUID, description: String? = nil, location: String? = nil, imageURL: URL) -> (model: FeedItem, json: [String: Any]) {
