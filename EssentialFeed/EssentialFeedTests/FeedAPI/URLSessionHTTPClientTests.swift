@@ -9,7 +9,7 @@ import XCTest
 import EssentialFeed
 
 #warning("How this production code is free to refactor in the future to use AFNetowrking or to keep using new APIs from URLSession")
-class URLSessionHTTPClient {
+class URLSessionHTTPClient: HTTPClient {
     private var session: URLSession
     init(session: URLSession = .shared) {
         self.session = session
@@ -99,7 +99,7 @@ class URLSessionHTTPClientTests: XCTestCase {
     
     //MARK: - Helpers
     
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> URLSessionHTTPClient {
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> HTTPClient {
         let sut = URLSessionHTTPClient()
         trackForMemoryLeaks(sut, file: file, line: line)
         return sut
