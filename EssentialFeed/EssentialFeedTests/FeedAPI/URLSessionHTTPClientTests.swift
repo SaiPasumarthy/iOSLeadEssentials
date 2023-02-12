@@ -8,27 +8,6 @@
 import XCTest
 import EssentialFeed
 
-#warning("How this production code is free to refactor in the future to use AFNetowrking or to keep using new APIs from URLSession")
-class URLSessionHTTPClient: HTTPClient {
-    private var session: URLSession
-    init(session: URLSession = .shared) {
-        self.session = session
-    }
-    
-    struct UnexpectedValuesRepresentation: Error {}
-    
-    func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void) {
-        session.dataTask(with: url) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-            } else if let data = data, let response = response as? HTTPURLResponse {
-                completion(.success(data, response))
-            } else {
-                completion(.failure(UnexpectedValuesRepresentation()))
-            }
-        }.resume()
-    }
-}
 class URLSessionHTTPClientTests: XCTestCase {
     
     override func setUp() {
