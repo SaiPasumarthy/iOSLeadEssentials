@@ -12,8 +12,8 @@ class EssentialFeedAPIEndToEndTests: XCTestCase {
 
     func test_endToEndTestServerGETResult_matchesFixedAccountData() {
          switch getFeedResult() {
-            case let .success(items):
-                XCTAssertEqual(items.count, 8)
+            case let .success(imageFeed):
+                XCTAssertEqual(imageFeed.count, 8)
             case let .failure(error):
                 XCTFail("Expected success but got \(error) instead")
             default:
