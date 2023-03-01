@@ -12,14 +12,19 @@ public final class LocalFeedLoader {
     #warning("Why currentDate is a clousure instead of just Date type let currentDate: Date")
     private let currentDate: () -> Date
     public typealias SaveResult = Error?
+    public typealias LoadResult = LoadFeedResult
     
     public init(store: FeedStore, timestamp: @escaping () -> Date) {
         self.store = store
         self.currentDate = timestamp
     }
     
-    public func load(completion: @escaping (Error?) -> Void) {
-        store.retrieval(with: completion)
+    public func load(completion: @escaping (LoadResult) -> Void) {
+        store.retrieval { error in
+            if let error = error {
+                completion(.failure(error))
+            }
+        }
     }
     
     public func save(_ feed: [FeedImage], completion: @escaping (SaveResult) -> Void) {
