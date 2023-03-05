@@ -37,9 +37,8 @@ class FeedStoreSpy: FeedStore {
         receivedMessages.append(.insert(feed, timestamp))
     }
     
-    func retrieval(with completion: @escaping RetrievalCompletion) {
-        retrievalCompletions.append(completion)
-        receivedMessages.append(.retrieval)
+    func completeInsertionSuccessFully(at index: Int = 0) {
+        insertionCompletions[index](nil)
     }
     
     func completeInsertion(with error: Error, at index: Int = 0) {
@@ -58,7 +57,8 @@ class FeedStoreSpy: FeedStore {
         retrievalCompletions[index](.empty)
     }
 
-    func completeInsertionSuccessFully(at index: Int = 0) {
-        insertionCompletions[index](nil)
+    func retrieval(with completion: @escaping RetrievalCompletion) {
+        retrievalCompletions.append(completion)
+        receivedMessages.append(.retrieval)
     }
 }
