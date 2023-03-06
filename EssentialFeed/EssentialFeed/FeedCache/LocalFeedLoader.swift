@@ -68,7 +68,7 @@ extension LocalFeedLoader {
     }
 }
 
-extension LocalFeedLoader {
+extension LocalFeedLoader: FeedLoader {
     public typealias LoadResult = LoadFeedResult
 
     public func load(completion: @escaping (LoadResult) -> Void) {
