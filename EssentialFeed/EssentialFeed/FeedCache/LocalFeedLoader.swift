@@ -11,21 +11,11 @@ public final class LocalFeedLoader {
     private let store: FeedStore
     #warning("Why currentDate is a clousure instead of just Date type let currentDate: Date")
     private let currentDate: () -> Date
-    private let calendar = Calendar(identifier: .gregorian)
 
     public init(store: FeedStore, timestamp: @escaping () -> Date) {
         self.store = store
         self.currentDate = timestamp
     }
-    
-    private func validate(_ timestamp: Date) -> Bool {
-        guard let maxCacheAge = calendar.date(byAdding: .day, value: maxCacheAgeInDays, to: timestamp) else {
-            return false
-        }
-        return currentDate() < maxCacheAge
-    }
-    
-    private var maxCacheAgeInDays : Int { return 7 }
 }
 
 extension LocalFeedLoader {
@@ -36,7 +26,7 @@ extension LocalFeedLoader {
             switch result {
             case .failure:
                 self.store.deleteCachedFeed { _ in }
-            case let .found(_, timestamp) where !self.validate(timestamp):
+            case let .found(_, timestamp) where !FeedCachePolicy.validate(timestamp, against: self.currentDate()):
                 self.store.deleteCachedFeed { _ in }
             case .found, .empty: break
             }
@@ -78,7 +68,7 @@ extension LocalFeedLoader: FeedLoader {
             switch result {
             case let .failure(error):
                 completion(.failure(error))
-            case let .found(feed, timestamp) where self.validate(timestamp):
+            case let .found(feed, timestamp) where FeedCachePolicy.validate(timestamp, against: self.currentDate()):
                 completion(.success(feed.toModel()))
             case .found, .empty:
                 completion(.success([]))
