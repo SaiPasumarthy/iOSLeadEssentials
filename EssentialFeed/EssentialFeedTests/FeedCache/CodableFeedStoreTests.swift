@@ -66,7 +66,14 @@ class CodableFeedStore {
     }
     
     func deleteCachedFeed(with completion: @escaping FeedStore.DeletionCompletion) {
-        completion(nil)
+        guard FileManager.default.fileExists(atPath: storeURL.path) else { return completion(nil) }
+        
+        do {
+            try FileManager.default.removeItem(at: storeURL)
+            completion(nil)
+        } catch {
+            completion(error)
+        }
     }
 
 }
@@ -168,12 +175,37 @@ class CodableFeedStoreTests: XCTestCase {
         expect(sut, toRetrive: .empty)
     }
     
+    func test_delete_emptiesPreviouslyInsertedCache() {
+        let sut = makeSUT()
+        
+        let insertionError = insert((uniqueImageFeed().local, Date()), sut: sut)
+        XCTAssertNil(insertionError, "Expect insertion error to be nil")
+        
+        let deletionError = deleteCache(from: sut)
+        
+        XCTAssertNil(deletionError, "Expect deletion error to be nil")
+        expect(sut, toRetrive: .empty)
+    }
+    
+//    func test_delete_deliversErrorOnDeletionError() {
+//        let noPermissionErrorURL = cacheDirectoryURL()
+//        let sut = makeSUT(storeURL: noPermissionErrorURL)
+//
+//        let deletionError = deleteCache(from: sut)
+//
+//        XCTAssertNotNil(deletionError, "Expect deletion error not to be nil")
+//    }
+    
     //MARK: Helpers
     
     private func testSpecificStoreURL() -> URL {
       return  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("\(type(of: self)).store")
     }
 
+//    private func cacheDirectoryURL() -> URL {
+//        return  FileManager.default.urls(for: .cachesDirectory, in: .systemDomainMask).first!.appendingPathComponent("\(type(of: self)).store")
+//    }
+    
     private func expect(_ sut: CodableFeedStore, toRetriveTwice expectedResult: RetrievalCachedFeedResult, file: StaticString = #filePath, line: UInt = #line) {
         expect(sut, toRetrive: expectedResult, file: file, line: line)
         expect(sut, toRetrive: expectedResult, file: file, line: line)
