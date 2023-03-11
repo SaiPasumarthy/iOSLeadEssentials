@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct LocalFeedImage: Equatable {
+public struct LocalFeedImage: Equatable, Codable {
     public let id: UUID
     public let description: String?
     public let location: String?
