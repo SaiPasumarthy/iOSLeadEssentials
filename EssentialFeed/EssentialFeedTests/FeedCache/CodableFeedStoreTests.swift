@@ -127,7 +127,7 @@ class CodableFeedStoreTests: XCTestCase {
 //    }
     
     func test_storeSideEffects_runSerially() {
-        let sut = makeSUT()
+        let sut = makeSUT(storeURL: testSpecificStoreURL())
         var completedOperationInOrder = [XCTestExpectation]()
         
         let op1 = expectation(description: "Wait for operation 1")
@@ -141,14 +141,14 @@ class CodableFeedStoreTests: XCTestCase {
             completedOperationInOrder.append(op2)
             op2.fulfill()
         }
-        
+
         let op3 = expectation(description: "Wait for operation 3")
         sut.insert(uniqueImageFeed().local, timestamp: Date()) { _ in
             completedOperationInOrder.append(op3)
             op3.fulfill()
         }
         
-        wait(for: [op1, op2, op3], timeout: 5.0)
+        waitForExpectations(timeout: 5.0)
         
         XCTAssertEqual(completedOperationInOrder, [op1, op2, op3])
     }
@@ -156,7 +156,7 @@ class CodableFeedStoreTests: XCTestCase {
     //MARK: Helpers
     
     private func testSpecificStoreURL() -> URL {
-      return  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("\(type(of: self)).store")
+        return  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("\(type(of: self)).store")
     }
 
 //    private func cacheDirectoryURL() -> URL {
