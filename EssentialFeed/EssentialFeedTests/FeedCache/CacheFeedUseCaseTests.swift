@@ -121,8 +121,8 @@ class CacheFeedUseCaseTests: XCTestCase {
         var receivedError: Error?
         let exp = expectation(description: "Wait for command")
         
-        sut.save(feed) { error in
-            receivedError = error
+        sut.save(feed) { result in
+            if case let Result.failure(error) = result { receivedError = error }
             exp.fulfill()
         }
         action()
