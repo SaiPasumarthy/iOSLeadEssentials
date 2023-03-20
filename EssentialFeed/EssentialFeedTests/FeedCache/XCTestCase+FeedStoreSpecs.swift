@@ -18,11 +18,11 @@ extension FeedStoreSpecs where Self: XCTestCase {
         let exp = expectation(description: "Wait for expectation")
         sut.retrieval { receivedResult in
             switch (receivedResult, expectedResult) {
-            case (.success(.empty), .success(.empty)), (.failure, .failure):
+            case (.success(.none), .success(.none)), (.failure, .failure):
                 break
-            case let (.success(.found(receivedImages, receivedTimestamp)), .success(.found(expectedImages, expectedTimestamp))):
-                XCTAssertEqual(receivedImages, expectedImages, file: file, line: line)
-                XCTAssertEqual(receivedTimestamp, expectedTimestamp, file: file, line: line)
+            case let (.success(.some(retrieved)), .success(.some(expected))):
+                XCTAssertEqual(retrieved.images, expected.images, file: file, line: line)
+                XCTAssertEqual(retrieved.timestamp, expected.timestamp, file: file, line: line)
             default:
                 XCTFail("Expected empty but got \(receivedResult)", file: file, line: line)
             }
