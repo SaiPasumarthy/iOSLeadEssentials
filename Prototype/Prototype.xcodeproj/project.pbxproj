@@ -14,6 +14,7 @@
 		98D28E8229CB723000E4BB54 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98D28E8029CB723000E4BB54 /* LaunchScreen.storyboard */; };
 		98D28E8A29CB792C00E4BB54 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D28E8929CB792C00E4BB54 /* FeedViewController.swift */; };
 		98D28E8C29CB7B2300E4BB54 /* FeedImageViewModel+PrototypeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D28E8B29CB7B2300E4BB54 /* FeedImageViewModel+PrototypeData.swift */; };
+		98D28E8E29CB7BB200E4BB54 /* FeedImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D28E8D29CB7BB200E4BB54 /* FeedImageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		98D28E8329CB723000E4BB54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		98D28E8929CB792C00E4BB54 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		98D28E8B29CB7B2300E4BB54 /* FeedImageViewModel+PrototypeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedImageViewModel+PrototypeData.swift"; sourceTree = "<group>"; };
+		98D28E8D29CB7BB200E4BB54 /* FeedImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				98D28E7729CB722900E4BB54 /* SceneDelegate.swift */,
 				98D28E8929CB792C00E4BB54 /* FeedViewController.swift */,
 				98D28E8B29CB7B2300E4BB54 /* FeedImageViewModel+PrototypeData.swift */,
+				98D28E8D29CB7BB200E4BB54 /* FeedImageCell.swift */,
 				98D28E7B29CB722900E4BB54 /* Main.storyboard */,
 				98D28E7E29CB723000E4BB54 /* Assets.xcassets */,
 				98D28E8029CB723000E4BB54 /* LaunchScreen.storyboard */,
@@ -145,6 +148,7 @@
 				98D28E8A29CB792C00E4BB54 /* FeedViewController.swift in Sources */,
 				98D28E7829CB722900E4BB54 /* SceneDelegate.swift in Sources */,
 				98D28E8C29CB7B2300E4BB54 /* FeedImageViewModel+PrototypeData.swift in Sources */,
+				98D28E8E29CB7BB200E4BB54 /* FeedImageCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
