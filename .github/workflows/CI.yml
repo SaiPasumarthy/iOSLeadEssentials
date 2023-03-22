@@ -21,4 +21,4 @@ jobs:
       run: xcodebuild clean build test -project ${GITHUB_WORKSPACE}/EssentialFeed/EssentialFeed.xcodeproj -scheme "CI_macOS" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk macosx -destination "platform=macOS" ONLY_ACTIVE_ARCH=YES
       
     - name: Build and test CI_iOS Scheme
-      run: xcodebuild clean build test -project ${GITHUB_WORKSPACE}/EssentialFeed/EssentialFeed.xcodeproj -scheme "CI_iOS" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator -destination "platform=iOS Simulator" Simulator,OS=15.5,name=iPhone 13 mini
+      run: xcodebuild clean build test -project ${GITHUB_WORKSPACE}/EssentialFeed/EssentialFeed.xcodeproj -scheme "CI_iOS" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator -destination "platform=iOS Simulator,OS=15.5,name=iPhone 13 mini" ONLY_ACTIVE_ARCH=YES
