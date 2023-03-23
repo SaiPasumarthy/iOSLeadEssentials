@@ -30,13 +30,13 @@ final class FeedViewController: UITableViewController {
 }
 
 extension FeedImageCell {
-    func configure(with model: FeedImageViewModel) {
-        self.feedImageView.image = UIImage(named: model.imageName)
-        
+    func configure(with model: FeedImageViewModel) {        
         self.descriptionLabel.text = model.description
         self.descriptionLabel.isHidden = model.description == nil
         
         self.locationLabel.text = model.location
         self.locationLabel.isHidden = model.location == nil
+        
+        fadeIn(UIImage(named: model.imageName))
     }
 }
