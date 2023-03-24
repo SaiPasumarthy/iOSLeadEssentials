@@ -56,6 +56,14 @@ class FeedViewControllerTests: XCTestCase {
         sut.refreshControl?.simulatePullRefresh()
         
         XCTAssertEqual(loader.loadCount, 2)
+        
+        sut.refreshControl?.simulatePullRefresh()
+        
+        XCTAssertEqual(loader.loadCount, 3)
+    }    
+    
+    func test_userInitiatedFeedLoad_reloadsFeed() {
+        
     }
     
     //MARK: Helpers
