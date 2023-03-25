@@ -53,6 +53,7 @@
 		98D28E9329CDAC5F00E4BB54 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D28E9229CDAC5F00E4BB54 /* FeedViewController.swift */; };
 		98D28E9A29CDCC6800E4BB54 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A305F5298CF68D00D669B9 /* EssentialFeed.framework */; platformFilter = ios; };
 		98D28E9B29CDCC6800E4BB54 /* EssentialFeed.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 98A305F5298CF68D00D669B9 /* EssentialFeed.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		98D28EA029CEF71E00E4BB54 /* FeedImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D28E9F29CEF71E00E4BB54 /* FeedImageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +150,7 @@
 		98D28E5B29CB041500E4BB54 /* EssentialFeediOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeediOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98D28E8F29CCB6E100E4BB54 /* FeedViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewControllerTests.swift; sourceTree = "<group>"; };
 		98D28E9229CDAC5F00E4BB54 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		98D28E9F29CEF71E00E4BB54 /* FeedImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -374,6 +376,7 @@
 			isa = PBXGroup;
 			children = (
 				98D28E9229CDAC5F00E4BB54 /* FeedViewController.swift */,
+				98D28E9F29CEF71E00E4BB54 /* FeedImageCell.swift */,
 			);
 			path = EssentialFeediOS;
 			sourceTree = "<group>";
@@ -695,6 +698,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				98D28E9329CDAC5F00E4BB54 /* FeedViewController.swift in Sources */,
+				98D28EA029CEF71E00E4BB54 /* FeedImageCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
