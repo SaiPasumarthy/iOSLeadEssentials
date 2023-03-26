@@ -130,6 +130,29 @@ class FeedViewControllerTests: XCTestCase {
         XCTAssertEqual(view1?.isShowingImageLoadingIndicator, false)
     }
     
+    func test_feedImageView_rendersImageLoadedFromURL() {
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completeFeedLoading(with: [makeImage(), makeImage()], at: 0)
+
+        let view0 = sut.simulateFeedImageViewVisible(at: 0)
+        let view1 = sut.simulateFeedImageViewVisible(at: 1)
+        
+        XCTAssertEqual(view0?.renderImage, .none)
+        XCTAssertEqual(view1?.renderImage, .none)
+        
+        let image0 = UIImage.make(withColor: .red).pngData()!
+        loader.completeImageLoading(image0, at: 0)
+        XCTAssertEqual(view0?.renderImage, image0)
+        XCTAssertEqual(view1?.renderImage, .none)
+        
+        let image1 = UIImage.make(withColor: .blue).pngData()!
+        loader.completeImageLoading(image1, at: 1)
+        XCTAssertEqual(view0?.renderImage, image0)
+        XCTAssertEqual(view1?.renderImage, image1)
+    }
+    
     //MARK: Helpers
     
     func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: FeedViewController, loader: FeedLoaderSpy) {
@@ -262,6 +285,9 @@ private extension FeedImageCell {
     var isShowingImageLoadingIndicator: Bool {
         return self.imageContainer.isShimmering
     }
+    var renderImage: Data? {
+        return self.feedImage.image?.pngData()!
+    }
 }
 private extension UIRefreshControl {
     func simulatePullRefresh() {
@@ -273,3 +299,16 @@ private extension UIRefreshControl {
         }
     }
 }
+
+private extension UIImage {
+     static func make(withColor color: UIColor) -> UIImage {
+         let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+         UIGraphicsBeginImageContext(rect.size)
+         let context = UIGraphicsGetCurrentContext()!
+         context.setFillColor(color.cgColor)
+         context.fill(rect)
+         let img = UIGraphicsGetImageFromCurrentImageContext()
+         UIGraphicsEndImageContext()
+         return img!
+     }
+ }
