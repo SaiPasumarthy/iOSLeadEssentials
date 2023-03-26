@@ -76,14 +76,27 @@ class FeedViewControllerTests: XCTestCase {
     }
     
     func test_feedImageView_loadsImageURLWhenVisible() {
+        let image0 = makeImage(url: URL(string: "https://any-image-url.com")!)
+        let image1 = makeImage(url: URL(string: "https://any-image-url-2.com")!)
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completeFeedLoading(with: [image0, image1], at: 0)
+
+        XCTAssertEqual(loader.loadedImageURLs, [])
         
+        sut.simulateFeedImageViewVisible(at: 0)
+        XCTAssertEqual(loader.loadedImageURLs, [image0.url])
+        
+        sut.simulateFeedImageViewVisible(at: 1)
+        XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url])
     }
     
     //MARK: Helpers
     
     func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: FeedViewController, loader: FeedLoaderSpy) {
         let loader = FeedLoaderSpy()
-        let sut = FeedViewController(loader: loader)
+        let sut = FeedViewController(feedLoader: loader, imageLoader: loader)
         trackForMemoryLeaks(loader, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, loader)
@@ -110,10 +123,13 @@ class FeedViewControllerTests: XCTestCase {
         XCTAssertEqual(feedImageCell.locationText, image.location, file: file, line: line)
         XCTAssertEqual(feedImageCell.descriptionText, image.description, file: file, line: line)
     }
-    func makeImage(description: String?, location: String?, url: URL = URL(string: "https://any-url.com")!) -> FeedImage {
+    func makeImage(description: String? = nil, location: String? = nil,
+                   url: URL = URL(string: "https://any-url.com")!) -> FeedImage {
         return FeedImage(id: UUID(), description: description, location: location, url: url)
     }
-    class FeedLoaderSpy: FeedLoader {
+    class FeedLoaderSpy: FeedLoader, FeedImageDataLoader {
+        
+        // MARK: - FeedLoader
         private var completions: [(FeedLoader.Result) -> Void] = []
         var loadCallCount: Int { return completions.count }
         
@@ -129,8 +145,14 @@ class FeedViewControllerTests: XCTestCase {
             let anyError = NSError(domain: "any error", code: 0)
             completions[index](.failure(anyError))
         }
+        
+        // MARK: - FeedImageDataLoader
+        private(set) var loadedImageURLs = [URL]()
+        
+        func loadImageData(from url: URL) {
+            loadedImageURLs.append(url)
+        }
     }
-
 }
 
 private extension FeedViewController {
@@ -153,6 +175,10 @@ private extension FeedViewController {
         let ds = tableView.dataSource
         let index = IndexPath(row: index, section: feedImageSection)
         return ds?.tableView(tableView, cellForRowAt: index)
+    }
+    
+    func simulateFeedImageViewVisible(at index: Int) {
+        let _ = feedImageView(at: index)
     }
 }
 private extension FeedImageCell {
