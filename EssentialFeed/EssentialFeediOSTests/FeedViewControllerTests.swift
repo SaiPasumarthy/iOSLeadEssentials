@@ -260,7 +260,7 @@ private extension FeedImageCell {
         return descriptionLabel.text
     }
     var isShowingImageLoadingIndicator: Bool {
-        return self.isShimmering
+        return self.imageContainer.isShimmering
     }
 }
 private extension UIRefreshControl {
