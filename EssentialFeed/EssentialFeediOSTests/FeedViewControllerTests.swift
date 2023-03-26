@@ -37,7 +37,7 @@ class FeedViewControllerTests: XCTestCase {
         sut.simulateUserInitiatedFeedLoad()
         XCTAssertEqual(sut.isShowingLoadingIndicator, true)
         
-        loader.completeFeedLoading(at: 1)
+        loader.completeFeedLoadingWithError(at: 1)
         XCTAssertEqual(sut.isShowingLoadingIndicator, false)
     }
     
@@ -73,6 +73,10 @@ class FeedViewControllerTests: XCTestCase {
         sut.simulateUserInitiatedFeedLoad()
         loader.completeFeedLoadingWithError(at: 0)
         assertThat(sut, isRendering: [image0])
+    }
+    
+    func test_feedImageView_loadsImageURLWhenVisible() {
+        
     }
     
     //MARK: Helpers
