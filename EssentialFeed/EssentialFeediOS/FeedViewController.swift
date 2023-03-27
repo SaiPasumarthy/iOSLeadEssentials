@@ -63,13 +63,21 @@ final public class FeedViewController: UITableViewController {
         feedImageCell.feedImage.image = nil
         feedImageCell.imageContainer.startShimmering()
         feedImageCell.feedImageRetryButton.isHidden = true
-        tasks[indexPath] = imageLoader?.loadImageData(from: model.url) { [weak feedImageCell] result in
-            let data = try? result.get()
-            let image = data.map(UIImage.init) ?? nil
-            feedImageCell?.feedImage.image = image
-            feedImageCell?.feedImageRetryButton.isHidden = (image != nil)
-            feedImageCell?.imageContainer.stopShimmering()
+        
+        let loadImage = { [weak self, weak feedImageCell] in
+            guard let self = self else { return }
+            
+            self.tasks[indexPath] = self.imageLoader?.loadImageData(from: model.url) { [weak feedImageCell] result in
+                let data = try? result.get()
+                let image = data.map(UIImage.init) ?? nil
+                feedImageCell?.feedImage.image = image
+                feedImageCell?.feedImageRetryButton.isHidden = (image != nil)
+                feedImageCell?.imageContainer.stopShimmering()
+            }
         }
+        
+        feedImageCell.onRetry = loadImage
+        loadImage()
         return feedImageCell
     }
     

@@ -189,6 +189,28 @@ class FeedViewControllerTests: XCTestCase {
         XCTAssertEqual(view0?.isShowRetryAction, true)
     }
     
+    func test_feedImageViewRetryAction_retriesImageLoad() {
+        let image0 = makeImage(url: URL(string: "https://any-image-url.com")!)
+        let image1 = makeImage(url: URL(string: "https://any-image-url-2.com")!)
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completeFeedLoading(with: [image0, image1], at: 0)
+        
+        let view0 = sut.simulateFeedImageViewVisible(at: 0)
+        let view1 = sut.simulateFeedImageViewVisible(at: 1)
+        XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url])
+        
+        loader.completeImageLoadingWithError(at: 0)
+        XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url])
+
+        view0?.simulateRetryAction()
+        XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url, image0.url])
+
+        view1?.simulateRetryAction()
+        XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url, image0.url, image1.url])
+    }
+    
     //MARK: Helpers
     
     func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: FeedViewController, loader: FeedLoaderSpy) {
@@ -327,6 +349,10 @@ private extension FeedImageCell {
     var isShowRetryAction: Bool {
         return !self.feedImageRetryButton.isHidden
     }
+    
+    func simulateRetryAction() {
+        feedImageRetryButton.simulateTap()
+    }
 }
 private extension UIRefreshControl {
     func simulatePullRefresh() {
@@ -339,6 +365,15 @@ private extension UIRefreshControl {
     }
 }
 
+private extension UIButton {
+    func simulateTap() {
+        allTargets.forEach { target in
+            actions(forTarget: target, forControlEvent: .touchUpInside)?.forEach {
+                (target as NSObject).perform(Selector($0))
+            }
+        }
+    }
+}
 private extension UIImage {
      static func make(withColor color: UIColor) -> UIImage {
          let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
