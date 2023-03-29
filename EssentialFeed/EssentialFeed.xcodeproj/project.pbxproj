@@ -57,6 +57,7 @@
 		98D28EA229D03C8E00E4BB54 /* UIView+Shimmering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D28EA129D03C8E00E4BB54 /* UIView+Shimmering.swift */; };
 		98D28EA829D44A3E00E4BB54 /* FeedImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D28EA729D44A3E00E4BB54 /* FeedImageDataLoader.swift */; };
 		98D28EAA29D467EE00E4BB54 /* FeedRefreshViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D28EA929D467EE00E4BB54 /* FeedRefreshViewController.swift */; };
+		98D28EAC29D471E000E4BB54 /* FeedImageCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D28EAB29D471E000E4BB54 /* FeedImageCellController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -157,6 +158,7 @@
 		98D28EA129D03C8E00E4BB54 /* UIView+Shimmering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shimmering.swift"; sourceTree = "<group>"; };
 		98D28EA729D44A3E00E4BB54 /* FeedImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageDataLoader.swift; sourceTree = "<group>"; };
 		98D28EA929D467EE00E4BB54 /* FeedRefreshViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRefreshViewController.swift; sourceTree = "<group>"; };
+		98D28EAB29D471E000E4BB54 /* FeedImageCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageCellController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -416,6 +418,7 @@
 			children = (
 				98D28E9229CDAC5F00E4BB54 /* FeedViewController.swift */,
 				98D28EA929D467EE00E4BB54 /* FeedRefreshViewController.swift */,
+				98D28EAB29D471E000E4BB54 /* FeedImageCellController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -743,6 +746,7 @@
 				98D28EA229D03C8E00E4BB54 /* UIView+Shimmering.swift in Sources */,
 				98D28E9329CDAC5F00E4BB54 /* FeedViewController.swift in Sources */,
 				98D28EA029CEF71E00E4BB54 /* FeedImageCell.swift in Sources */,
+				98D28EAC29D471E000E4BB54 /* FeedImageCellController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

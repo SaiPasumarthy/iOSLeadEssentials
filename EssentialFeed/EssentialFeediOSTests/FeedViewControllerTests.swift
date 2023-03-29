@@ -92,7 +92,7 @@ class FeedViewControllerTests: XCTestCase {
         XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url])
     }
     
-    func test_feedImageView_cacelImageLoadingWhenNotVisibleAnymore() {
+    func test_feedImageView_cancelImageLoadingWhenNotVisibleAnymore() {
         let image0 = makeImage(url: URL(string: "https://any-image-url.com")!)
         let image1 = makeImage(url: URL(string: "https://any-image-url-2.com")!)
         let (sut, loader) = makeSUT()
