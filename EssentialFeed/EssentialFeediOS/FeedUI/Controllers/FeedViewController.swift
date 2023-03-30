@@ -8,31 +8,24 @@
 import UIKit
 import EssentialFeed
 
-final public class FeedViewController: UITableViewController, UITableViewDataSourcePrefetching {
+public final class FeedViewController: UITableViewController, UITableViewDataSourcePrefetching {
     private var feedLoader: FeedLoader?
-    private var imageLoader: FeedImageDataLoader?
     private var cellControllers = [IndexPath: FeedImageCellController]()
-    private var tableModel = [FeedImage]() {
+    var tableModel = [FeedImageCellController]() {
         didSet {
             tableView.reloadData()
         }
     }
     private var refreshViewController: FeedRefreshViewController?
-    public convenience init(feedLoader: FeedLoader, imageLoader: FeedImageDataLoader) {
+    convenience init(refreshController: FeedRefreshViewController) {
         self.init()
-        self.feedLoader = feedLoader
-        self.imageLoader = imageLoader
-        refreshViewController = FeedRefreshViewController(feedLoader: feedLoader)
+        refreshViewController = refreshController
     }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.prefetchDataSource = self
         refreshControl = refreshViewController?.view
-        refreshViewController?.onRefresh = { [weak self] feed in
-            self?.tableModel = feed
-        }
         refreshViewController?.refresh()
     }
     
@@ -59,12 +52,9 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
         indexPaths.forEach(removeCellController)
     }
     private func cellController(forRowAt indexPath: IndexPath) -> FeedImageCellController {
-        let model = tableModel[indexPath.row]
-        let cellController = FeedImageCellController(model: model, imageLoader: imageLoader!)
-        cellControllers[indexPath] = cellController
-        return cellController
+        return tableModel[indexPath.row]
     }
     private func removeCellController(forRowAt indexPath: IndexPath) {
-        cellControllers[indexPath] = nil
+        tableModel[indexPath.row].cancelLoad()
     }
 }
