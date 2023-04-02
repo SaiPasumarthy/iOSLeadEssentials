@@ -262,7 +262,7 @@ class FeedViewControllerTests: XCTestCase {
             return
         }
         feed.enumerated().forEach { index, image in
-            assertThat(sut, hasViewConfiguredFor: image, at: index)
+            assertThat(sut, hasViewConfiguredFor: image, at: index, file: file, line: line)
         }
     }
     func assertThat(_ sut: FeedViewController, hasViewConfiguredFor image: FeedImage, at index: Int,
