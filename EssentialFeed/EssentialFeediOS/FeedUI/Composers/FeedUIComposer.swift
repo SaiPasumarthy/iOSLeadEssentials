@@ -12,32 +12,31 @@ public final class FeedUIComposer {
     private init() {}
     
     static public func feedComposedWith(feedLoader: FeedLoader, imageLoader: FeedImageDataLoader) -> FeedViewController {
-        let presenter = FeedPresenter()
-        let feedLoaderPresenterAdapter = FeedLoaderPresentationAdapter(feedLoader: feedLoader, feedPresenter: presenter)
+        let feedLoaderPresenterAdapter = FeedLoaderPresentationAdapter(feedLoader: feedLoader)
         let refreshViewController = FeedRefreshViewController(delegate: feedLoaderPresenterAdapter)
-        presenter.loadingView = WeakRefVirtualProxy(refreshViewController)
         let feedViewController = FeedViewController(refreshController: refreshViewController)
-        presenter.feedView = FeedViewAdapter(controller: feedViewController, loader: imageLoader)
+        let feedAdapter = FeedViewAdapter(controller: feedViewController, loader: imageLoader)
+        let presenter = FeedPresenter(feedView: feedAdapter, loadingView: WeakRefVirtualProxy(refreshViewController))
+        feedLoaderPresenterAdapter.feedPresenter = presenter
         return feedViewController
     }
 }
 
 private final class FeedLoaderPresentationAdapter: FeedRefreshViewControllerDelegate {
     let feedLoader: FeedLoader
-    let feedPresenter: FeedPresenter
-    init(feedLoader: FeedLoader, feedPresenter: FeedPresenter) {
+    var feedPresenter: FeedPresenter?
+    init(feedLoader: FeedLoader) {
         self.feedLoader = feedLoader
-        self.feedPresenter = feedPresenter
     }
     
     func didRequestFeedRefresh() {
-        feedPresenter.didStartLoadingFeed()
+        feedPresenter?.didStartLoadingFeed()
         self.feedLoader.load { [weak self] result in
             switch result {
             case let .success(feed):
-                self?.feedPresenter.didFinishLoadingFeed(with: feed)
+                self?.feedPresenter?.didFinishLoadingFeed(with: feed)
             case let .failure(error):
-                self?.feedPresenter.didFinishLoadingFeed(with: error)
+                self?.feedPresenter?.didFinishLoadingFeed(with: error)
             }
         }
     }
