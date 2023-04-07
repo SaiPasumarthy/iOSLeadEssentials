@@ -7,40 +7,38 @@
 
 import UIKit
 
-final class FeedImageCellController {
-    private var viewModel: FeedImageViewModel<UIImage>
-    init(viewModel: FeedImageViewModel<UIImage>) {
-        self.viewModel = viewModel
+protocol FeedImageCellControllerDelegate {
+    func didRequestImage()
+    func didCancelRequestImage()
+}
+
+final class FeedImageCellController: FeedImageView {
+    private var delegate: FeedImageCellControllerDelegate
+    private lazy var cell = FeedImageCell()
+    init(delegate: FeedImageCellControllerDelegate) {
+        self.delegate = delegate
     }
     func view() -> UITableViewCell {
-        let feedImageCell = binded(FeedImageCell())
-        viewModel.loadImageData()
-        return feedImageCell
+        delegate.didRequestImage()
+        return cell
     }
-    func binded(_ view: FeedImageCell) -> FeedImageCell {
-        view.locationContainer.isHidden = !viewModel.hasLocation
-        view.locationLabel.text = viewModel.location
-        view.descriptionLabel.text = viewModel.description
-        view.onRetry = viewModel.loadImageData
-        viewModel.onImageLoad = { [weak view] image in
-            view?.feedImage.image = image
+    func display(_ model: FeedImageViewModel<UIImage>) {
+        cell.locationContainer.isHidden = !model.hasLocation
+        cell.locationLabel.text = model.location
+        cell.descriptionLabel.text = model.description
+        cell.onRetry = delegate.didRequestImage
+        cell.feedImage.image = model.image
+        if model.isLoading {
+            cell.imageContainer.startShimmering()
+        } else {
+            cell.imageContainer.stopShimmering()
         }
-        viewModel.onImageLodingStateChange = { [weak view] isLoading in
-            if isLoading {
-                view?.imageContainer.startShimmering()
-            } else {
-                view?.imageContainer.stopShimmering()
-            }
-        }
-        viewModel.onShouldRetryImageLoadStateChange = { [weak view] shouldRetry in
-            view?.feedImageRetryButton.isHidden = !shouldRetry
-        }
-        return view
+        cell.feedImageRetryButton.isHidden = !model.shouldRetry
     }
     func preload() {
-        viewModel.loadImageData()
+        delegate.didRequestImage()
     }
     func cancelLoad() {
-        viewModel.cancelImageLoadData()
+        delegate.didCancelRequestImage()
     }
 }
