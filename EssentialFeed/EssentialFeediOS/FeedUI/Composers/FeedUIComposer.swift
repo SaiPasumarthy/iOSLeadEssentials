@@ -13,15 +13,15 @@ public final class FeedUIComposer {
     
     static public func feedComposedWith(feedLoader: FeedLoader, imageLoader: FeedImageDataLoader) -> FeedViewController {
         let feedLoaderPresenterAdapter = FeedLoaderPresentationAdapter(feedLoader: feedLoader)
-        let refreshViewController = FeedRefreshViewController(delegate: feedLoaderPresenterAdapter)
         
         let bundle = Bundle(for: FeedViewController.self)
         let stroyboard = UIStoryboard.init(name: "Feed", bundle: bundle)
         let feedViewController = stroyboard.instantiateInitialViewController() as! FeedViewController
-        feedViewController.refreshViewController = refreshViewController
+        let refreshController = feedViewController.refreshViewController!
+        refreshController.delegate = feedLoaderPresenterAdapter
         
         let feedAdapter = FeedViewAdapter(controller: feedViewController, loader: imageLoader)
-        let presenter = FeedPresenter(feedView: feedAdapter, loadingView: WeakRefVirtualProxy(refreshViewController))
+        let presenter = FeedPresenter(feedView: feedAdapter, loadingView: WeakRefVirtualProxy(refreshController))
         feedLoaderPresenterAdapter.feedPresenter = presenter
         return feedViewController
     }
