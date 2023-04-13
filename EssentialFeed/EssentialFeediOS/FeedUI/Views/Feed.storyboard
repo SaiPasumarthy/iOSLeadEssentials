@@ -122,6 +122,7 @@
                         <connections>
                             <outlet property="dataSource" destination="vrM-X6-jrs" id="d0T-CX-9Mb"/>
                             <outlet property="delegate" destination="vrM-X6-jrs" id="qL9-mx-mhv"/>
+                            <outlet property="prefetchDataSource" destination="vrM-X6-jrs" id="Z6t-Yf-JuX"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="My Feed" id="ao4-zE-wqt"/>
