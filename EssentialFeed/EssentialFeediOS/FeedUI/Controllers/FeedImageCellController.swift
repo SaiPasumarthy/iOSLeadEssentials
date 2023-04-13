@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 final class FeedImageCellController {
     private var viewModel: FeedImageViewModel<UIImage>

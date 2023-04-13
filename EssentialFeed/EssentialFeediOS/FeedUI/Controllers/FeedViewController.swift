@@ -6,9 +6,24 @@
 //
 
 import UIKit
+import SwiftUI
+import EssentialFeed
+import Combine
+struct FeedViewUI: View {
+    @State var tableModel = [FeedImage]()
+    private var model: FeedViewModel?
+    private var imageView: (FeedImage) -> FeedImageCellView
+    init(model: FeedViewModel, imageView: @escaping (FeedImage) -> FeedImageCellView) {
+        self.model = model
+        self.imageView = imageView
+    }
+    var body: some View {
+        Text("")
+        imageView(FeedImage(id: UUID(), description: nil, location: nil, url: URL(string: "")!))
+    }
+}
 
 public final class FeedViewController: UITableViewController, UITableViewDataSourcePrefetching {
-    private var cellControllers = [IndexPath: FeedImageCellController]()
     var tableModel = [FeedImageCellController]() {
         didSet {
             tableView.reloadData()
