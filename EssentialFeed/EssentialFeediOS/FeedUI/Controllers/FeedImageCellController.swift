@@ -28,7 +28,7 @@ final class FeedImageCellController: FeedImageView {
         cell?.locationLabel.text = model.location
         cell?.descriptionLabel.text = model.description
         cell?.onRetry = delegate.didRequestImage
-        cell?.feedImage.image = model.image
+        cell?.feedImage.setImageAnimated(model.image)
         if model.isLoading {
             cell?.imageContainer.startShimmering()
         } else {
