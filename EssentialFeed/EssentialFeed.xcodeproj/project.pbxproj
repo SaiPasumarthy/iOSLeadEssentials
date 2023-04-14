@@ -54,7 +54,7 @@
 		98C609992998CD8300471696 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A305F5298CF68D00D669B9 /* EssentialFeed.framework */; };
 		98C6099F2998D0DB00471696 /* XCTestCase+MemoryLeakTrackingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C6098D2998B60100471696 /* XCTestCase+MemoryLeakTrackingHelper.swift */; };
 		98D28E5C29CB041500E4BB54 /* EssentialFeediOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98D28E5429CB041500E4BB54 /* EssentialFeediOS.framework */; };
-		98D28E9029CCB6E100E4BB54 /* FeedViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D28E8F29CCB6E100E4BB54 /* FeedViewControllerTests.swift */; };
+		98D28E9029CCB6E100E4BB54 /* FeedUIIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D28E8F29CCB6E100E4BB54 /* FeedUIIntegrationTests.swift */; };
 		98D28E9129CCB9C100E4BB54 /* XCTestCase+MemoryLeakTrackingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C6098D2998B60100471696 /* XCTestCase+MemoryLeakTrackingHelper.swift */; };
 		98D28E9329CDAC5F00E4BB54 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D28E9229CDAC5F00E4BB54 /* FeedViewController.swift */; };
 		98D28E9A29CDCC6800E4BB54 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A305F5298CF68D00D669B9 /* EssentialFeed.framework */; platformFilter = ios; };
@@ -128,6 +128,7 @@
 		981C7B4B29E880BA001993BA /* UIImageView+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Animations.swift"; sourceTree = "<group>"; };
 		981C7B5029E97E6F001993BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Feed.strings; sourceTree = "<group>"; };
 		981C7B5429E98009001993BA /* FeedViewControllerTests+Localize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedViewControllerTests+Localize.swift"; sourceTree = "<group>"; };
+		981C7B5629E9A3D2001993BA /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Feed.strings"; sourceTree = "<group>"; };
 		984652CA29A09A2500400CDE /* CacheFeedUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheFeedUseCaseTests.swift; sourceTree = "<group>"; };
 		984652CE29A1F36500400CDE /* LocalFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedLoader.swift; sourceTree = "<group>"; };
 		984652D029A1F3C800400CDE /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
@@ -167,7 +168,7 @@
 		98C609972998CD8300471696 /* EssentialFeedAPIEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssentialFeedAPIEndToEndTests.swift; sourceTree = "<group>"; };
 		98D28E5429CB041500E4BB54 /* EssentialFeediOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EssentialFeediOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		98D28E5B29CB041500E4BB54 /* EssentialFeediOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeediOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		98D28E8F29CCB6E100E4BB54 /* FeedViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewControllerTests.swift; sourceTree = "<group>"; };
+		98D28E8F29CCB6E100E4BB54 /* FeedUIIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedUIIntegrationTests.swift; sourceTree = "<group>"; };
 		98D28E9229CDAC5F00E4BB54 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		98D28E9F29CEF71E00E4BB54 /* FeedImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageCell.swift; sourceTree = "<group>"; };
 		98D28EA129D03C8E00E4BB54 /* UIView+Shimmering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shimmering.swift"; sourceTree = "<group>"; };
@@ -411,7 +412,7 @@
 		98D28E5F29CB041500E4BB54 /* EssentialFeediOSTests */ = {
 			isa = PBXGroup;
 			children = (
-				98D28E8F29CCB6E100E4BB54 /* FeedViewControllerTests.swift */,
+				98D28E8F29CCB6E100E4BB54 /* FeedUIIntegrationTests.swift */,
 				981C7B5429E98009001993BA /* FeedViewControllerTests+Localize.swift */,
 			);
 			path = EssentialFeediOSTests;
@@ -654,6 +655,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"pt-BR",
 			);
 			mainGroup = 98A305EB298CF68D00D669B9;
 			productRefGroup = 98A305F6298CF68D00D669B9 /* Products */;
@@ -805,7 +807,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98D28E9029CCB6E100E4BB54 /* FeedViewControllerTests.swift in Sources */,
+				98D28E9029CCB6E100E4BB54 /* FeedUIIntegrationTests.swift in Sources */,
 				98D28E9129CCB9C100E4BB54 /* XCTestCase+MemoryLeakTrackingHelper.swift in Sources */,
 				981C7B5529E98009001993BA /* FeedViewControllerTests+Localize.swift in Sources */,
 			);
@@ -847,6 +849,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				981C7B5029E97E6F001993BA /* en */,
+				981C7B5629E9A3D2001993BA /* pt-BR */,
 			);
 			name = Feed.strings;
 			sourceTree = "<group>";
@@ -888,6 +891,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -951,6 +955,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
