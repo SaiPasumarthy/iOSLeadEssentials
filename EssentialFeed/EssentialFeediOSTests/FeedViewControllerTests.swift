@@ -15,12 +15,8 @@ class FeedViewControllerTests: XCTestCase {
         let (sut, _) = makeSUT()
         
         sut.loadViewIfNeeded()
-        
-        let localisedKey = "FEED_VIEW_TITLE"
-        let bundle = Bundle(for: FeedViewController.self)
-        let localisedTitle = bundle.localizedString(forKey: localisedKey, value: nil, table: "Feed")
-        
-        XCTAssertNotEqual(localisedKey, localisedTitle, "Missing localised string for key : \(localisedKey)")
+            
+        let localisedTitle = localized("FEED_VIEW_TITLE")
         XCTAssertEqual(sut.title, localisedTitle)
     }
     
