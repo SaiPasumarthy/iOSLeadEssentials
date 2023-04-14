@@ -24,7 +24,7 @@ struct FeedViewModel {
     let feed: [FeedImage]
 }
 
-final class FeedPresenter {
+final public class FeedPresenter {
     private let feedView: FeedView
     private let loadingView: FeedLoadingView
     
