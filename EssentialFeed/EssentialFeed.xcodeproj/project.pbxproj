@@ -129,6 +129,7 @@
 		981C7B5029E97E6F001993BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Feed.strings; sourceTree = "<group>"; };
 		981C7B5429E98009001993BA /* FeedViewControllerTests+Localize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedViewControllerTests+Localize.swift"; sourceTree = "<group>"; };
 		981C7B5629E9A3D2001993BA /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Feed.strings"; sourceTree = "<group>"; };
+		981C7B5729E9A41A001993BA /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Feed.strings; sourceTree = "<group>"; };
 		984652CA29A09A2500400CDE /* CacheFeedUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheFeedUseCaseTests.swift; sourceTree = "<group>"; };
 		984652CE29A1F36500400CDE /* LocalFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedLoader.swift; sourceTree = "<group>"; };
 		984652D029A1F3C800400CDE /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
@@ -656,6 +657,7 @@
 				en,
 				Base,
 				"pt-BR",
+				el,
 			);
 			mainGroup = 98A305EB298CF68D00D669B9;
 			productRefGroup = 98A305F6298CF68D00D669B9 /* Products */;
@@ -850,6 +852,7 @@
 			children = (
 				981C7B5029E97E6F001993BA /* en */,
 				981C7B5629E9A3D2001993BA /* pt-BR */,
+				981C7B5729E9A41A001993BA /* el */,
 			);
 			name = Feed.strings;
 			sourceTree = "<group>";
