@@ -36,7 +36,7 @@ private extension FeedViewController {
     }
 }
 
-private final class FeedImageLoaderPresentationAdapter<View: FeedImageView, Image>: FeedImageCellControllerDelegate where View.Image == Image {
+final class FeedImageLoaderPresentationAdapter<View: FeedImageView, Image>: FeedImageCellControllerDelegate where View.Image == Image {
     private let imageLoader: FeedImageDataLoader
     private let feed: FeedImage
     private var task: FeedImageDataLoaderTask?
@@ -63,7 +63,7 @@ private final class FeedImageLoaderPresentationAdapter<View: FeedImageView, Imag
         task?.cancel()
     }
 }
-private final class FeedLoaderPresentationAdapter: FeedViewControllerDelegate {
+final class FeedLoaderPresentationAdapter: FeedViewControllerDelegate {
     let feedLoader: FeedLoader
     var feedPresenter: FeedPresenter?
     init(feedLoader: FeedLoader) {
@@ -79,25 +79,6 @@ private final class FeedLoaderPresentationAdapter: FeedViewControllerDelegate {
             case let .failure(error):
                 self?.feedPresenter?.didFinishLoadingFeed(with: error)
             }
-        }
-    }
-}
-
-private final class FeedViewAdapter: FeedView {
-    private weak var controller: FeedViewController?
-    let loader: FeedImageDataLoader
-    
-    init(controller: FeedViewController, loader: FeedImageDataLoader) {
-        self.controller = controller
-        self.loader = loader
-    }
-    
-    func display(viewModel: FeedViewModel) {
-        controller?.tableModel = viewModel.feed.map { feedImage in
-            let adapter = FeedImageLoaderPresentationAdapter<WeakRefVirtualProxy<FeedImageCellController>, UIImage>(imageLoader: loader, feed: feedImage)
-            let view = FeedImageCellController(delegate: adapter)
-            adapter.presenter = FeedImagePresenter(view: WeakRefVirtualProxy(view), imageTransformer: UIImage.init)
-            return view
         }
     }
 }
