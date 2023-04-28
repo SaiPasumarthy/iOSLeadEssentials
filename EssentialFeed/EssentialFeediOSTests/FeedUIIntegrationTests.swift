@@ -74,6 +74,14 @@ class FeedUIIntegrationTests: XCTestCase {
         assertThat(sut, isRendering: [image0])
     }
     
+    func test_errorView_doesNotRenderErrorOnLoad() {
+        let (sut, _) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        
+        XCTAssertEqual(sut.errorMessage, nil)
+    }
+    
     func test_feedImageView_loadsImageURLWhenVisible() {
         let image0 = makeImage(url: URL(string: "https://any-image-url.com")!)
         let image1 = makeImage(url: URL(string: "https://any-image-url-2.com")!)
@@ -408,6 +416,10 @@ private extension FeedViewController {
         delegate?.tableView?(tableView, didEndDisplaying: feedImageCell!, forRowAt: index)
         
         return feedImageCell
+    }
+    
+    var errorMessage: String? {
+        return errorView.errorMessage
     }
     
     func simulateFeedImageViewNearVisible(at index: Int) {
