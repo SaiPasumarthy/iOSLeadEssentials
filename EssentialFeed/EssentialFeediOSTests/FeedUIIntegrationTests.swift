@@ -424,7 +424,7 @@ private extension FeedViewController {
     }
     
     var errorMessage: String? {
-        return errorView.errorMessage
+        return errorView?.errorMessage
     }
     
     func simulateFeedImageViewNearVisible(at index: Int) {
