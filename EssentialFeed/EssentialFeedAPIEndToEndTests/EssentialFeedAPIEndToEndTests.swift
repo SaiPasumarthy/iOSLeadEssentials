@@ -39,9 +39,7 @@ class EssentialFeedAPIEndToEndTests: XCTestCase {
     //MARK: - Helpers
     
     private func getFeedResult(file: StaticString = #filePath, line: UInt = #line) -> RemoteFeedLoader.Result? {
-        let client = URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
-        let loader = RemoteFeedLoader(url: feedTestServerURL, client: client)
-        trackForMemoryLeaks(client, file: file, line: line)
+        let loader = RemoteFeedLoader(url: feedTestServerURL, client: ephemeralClient())
         trackForMemoryLeaks(loader, file: file, line: line)
         var receivedResult: RemoteFeedLoader.Result?
         let exp = expectation(description: "Wait for expectation")
@@ -55,9 +53,7 @@ class EssentialFeedAPIEndToEndTests: XCTestCase {
     
     private func getFeedImageDataResult(file: StaticString = #filePath, line: UInt = #line) -> FeedImageDataLoader.Result? {
         let testServerURL = feedTestServerURL.appendingPathComponent("73A7F70C-75DA-4C2E-B5A3-EED40DC53AA6/image")
-        let client = URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
-        let imageLoader = RemoteFeedImageDataLoader(client: client)
-        trackForMemoryLeaks(client, file: file, line: line)
+        let imageLoader = RemoteFeedImageDataLoader(client: ephemeralClient())
         trackForMemoryLeaks(imageLoader, file: file, line: line)
         var receivedResult: FeedImageDataLoader.Result?
         let exp = expectation(description: "Wait for expectation")
@@ -72,5 +68,11 @@ class EssentialFeedAPIEndToEndTests: XCTestCase {
     
     private var feedTestServerURL: URL {
         return URL(string: "https://essentialdeveloper.com/feed-case-study/test-api/feed")!
+    }
+    
+    private func ephemeralClient(file: StaticString = #file, line: UInt = #line) -> HTTPClient {
+        let client = URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
+        trackForMemoryLeaks(client, file: file, line: line)
+        return client
     }
 }
