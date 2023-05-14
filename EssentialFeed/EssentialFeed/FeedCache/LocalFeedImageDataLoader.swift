@@ -16,8 +16,13 @@ public final class LocalFeedImageDataLoader {
 
 extension LocalFeedImageDataLoader {
     public typealias SaveResult = Result<Void, Error>
+    public enum SaveError: Swift.Error {
+        case failed
+    }
     public func save(data: Data, for url: URL, completion: @escaping (SaveResult) -> Void) {
-        store.insert(data: data, for: url) { _ in }
+        store.insert(data: data, for: url) { _ in
+            completion(.failure(SaveError.failed))
+        }
     }
 }
 
