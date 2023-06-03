@@ -18,32 +18,34 @@ class EssentialFeedCacheIntegrationTests: XCTestCase {
         undoDiskArtifacts()
     }
     
+    // MARK: - LocalFeedLoader Tests
+    
     func test_load_deliversNoImagesOnEmptyCache() {
         let sut = makeFeedLoader()
         
         expect(sut, toLoad: [])
     }
     
-    func test_load_deliversItemsSavedOnASeperateInstance() {
-        let sutToPerformSave = makeFeedLoader()
-        let sutToPerformLoad = makeFeedLoader()
+    func test_loadFeed_deliversItemsSavedOnASeparateInstance() {
+        let feedLoaderToPerformSave = makeFeedLoader()
+        let feedLoaderToPerformLoad = makeFeedLoader()
         let feed = uniqueImageFeed().models
 
-        save(feed, with: sutToPerformSave)
+        save(feed, with: feedLoaderToPerformSave)
         
-        expect(sutToPerformLoad, toLoad: feed)
+        expect(feedLoaderToPerformLoad, toLoad: feed)
     }
     
-    func test_save_overridesItemsSavedOnASeperateInstance() {
-        let sutToPerformFirstSave = makeFeedLoader()
-        let sutToPerformLastSave = makeFeedLoader()
-        let sutToPerformLoad = makeFeedLoader()
+    func test_saveFeed_overridesItemsSavedOnASeparateInstance() {
+        let feedLoaderToPerformFirstSave = makeFeedLoader()
+        let feedLoaderToPerformLastSave = makeFeedLoader()
+        let feedLoaderToPerformLoad = makeFeedLoader()
         let latestFeed = uniqueImageFeed().models
 
-        save(uniqueImageFeed().models, with: sutToPerformFirstSave)
-        save(latestFeed, with: sutToPerformLastSave)
+        save(uniqueImageFeed().models, with: feedLoaderToPerformFirstSave)
+        save(latestFeed, with: feedLoaderToPerformLastSave)
         
-        expect(sutToPerformLoad, toLoad: latestFeed)
+        expect(feedLoaderToPerformLoad, toLoad: latestFeed)
     }
     
     // MARK: - LocalFeedImageDataLoader Tests
@@ -63,7 +65,7 @@ class EssentialFeedCacheIntegrationTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeImageLoader(file: StaticString = #filePath, line: UInt = #line) -> LocalFeedLoader {
+    private func makeImageLoader(file: StaticString = #filePath, line: UInt = #line) -> LocalFeedImageDataLoader {
         let storeURL = testSpecificStoreURL()
         let store = try! CoreDataFeedStore(storeURL: storeURL)
         let sut = LocalFeedImageDataLoader(store)
