@@ -31,7 +31,7 @@ class FeedImageDataLoaderWithFallbackComposite: FeedImageDataLoader {
         task.wrapped = primary.loadImageData(from: url, completion: { [weak self] result in
             switch result {
             case .success:
-                break
+                completion(result)
                 
             case .failure:
                 task.wrapped = self?.fallback.loadImageData(from: url) { _ in }
@@ -95,6 +95,15 @@ class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
         XCTAssertEqual(fallback.cancelledURLs, [url], "Expected cancelled URLs in the fallback loader")
     }
     
+    func test_loadImageData_deliversPrimaryDataOnPrimaryLoaderSuccess() {
+        let primaryData = anyData()
+        let (sut, primary, _) = makeSUT()
+        
+        expect(sut: sut, toCompleteWith: .success(primaryData)) {
+            primary.complete(with: primaryData)
+        }
+    }
+    
     private func anyNSError() -> NSError {
         return NSError(domain: "a error", code: 1)
     }
@@ -116,10 +125,36 @@ class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
         return (sut, primaryLoader, fallbackLoader)
     }
     
+    private func expect(sut: FeedImageDataLoaderWithFallbackComposite, toCompleteWith expectedResult: FeedImageDataLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+        let exp = expectation(description: "Waiting for image data completion")
+        _ = sut.loadImageData(from: anyURL()) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedData), .success(expectedData)):
+                XCTAssertEqual(receivedData, expectedData, file: file, line: line)
+                
+            case (.failure, .failure):
+                break
+                
+            default:
+                XCTFail("Expected \(expectedResult), got \(receivedResult) instead", file: file, line: line)
+            }
+            
+            exp.fulfill()
+        }
+        
+        action()
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     func trackForMemoryLeaks(_ instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
         addTeardownBlock { [weak instance] in
             XCTAssertNil(instance, "SUT instance is not deallocated", file: file, line: line)
         }
+    }
+    
+    func anyData() -> Data {
+        return Data("any data".utf8)
     }
     
     private class LoaderSpy: FeedImageDataLoader {
@@ -147,6 +182,10 @@ class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
         
         func complete(with error: Error, at index: Int = 0) {
             messages[index].completion(.failure(error))
+        }
+        
+        func complete(with data: Data, at index: Int = 0) {
+            messages[index].completion(.success(data))
         }
     }
 }
