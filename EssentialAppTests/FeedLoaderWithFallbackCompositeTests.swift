@@ -36,7 +36,7 @@ class FeedLoaderWithFallbackCompositeTests: XCTestCase {
         
         let sut = makeSUT(primaryResult: .success(primaryFeed), fallbackResult: .success(fallbackFeed))
 
-        expect(sut: sut, toCompleteWith: primaryFeed)
+        expect(sut: sut, toCompleteWith: .success(primaryFeed))
     }
     
     func test_load_deliversFallbackFeedOnPrimaryLoaderFailure() {
@@ -44,7 +44,7 @@ class FeedLoaderWithFallbackCompositeTests: XCTestCase {
         
         let sut = makeSUT(primaryResult: .failure(anyNSError()), fallbackResult: .success(fallbackFeed))
         
-        expect(sut: sut, toCompleteWith: fallbackFeed)
+        expect(sut: sut, toCompleteWith: .success(fallbackFeed))
     }
     
     // MARK: - Helpers
@@ -60,16 +60,19 @@ class FeedLoaderWithFallbackCompositeTests: XCTestCase {
         return sut
     }
     
-    private func expect(sut: FeedLoaderWithFallbackComposite, toCompleteWith expectedResult: [FeedImage], file: StaticString = #filePath, line: UInt = #line) {
+    private func expect(sut: FeedLoaderWithFallbackComposite, toCompleteWith expectedResult: FeedLoader.Result, file: StaticString = #filePath, line: UInt = #line) {
         
         let exp = expectation(description: "Waiting for load completion")
-        sut.load { result in
-            switch result {
-            case let .success(receivedFeed):
-                XCTAssertEqual(receivedFeed, expectedResult, file: file, line: line)
+        sut.load { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedFeed), .success(expectedFeed)):
+                XCTAssertEqual(receivedFeed, expectedFeed, file: file, line: line)
                 
-            case .failure:
-                XCTFail("Expected successful load feed result, got \(result) instead", file: file, line: line)
+            case (.failure, .failure):
+                break
+                
+            default:
+                XCTFail("Expected \(expectedResult), got \(receivedResult) instead", file: file, line: line)
             }
             
             exp.fulfill()
