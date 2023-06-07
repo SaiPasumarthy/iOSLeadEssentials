@@ -11,9 +11,11 @@ import EssentialFeed
 
 class FeedImageDataLoaderWithFallbackComposite: FeedImageDataLoader {
     private let primary: FeedImageDataLoader
+    private let fallback: FeedImageDataLoader
     
     init(primary: FeedImageDataLoader, fallback: FeedImageDataLoader) {
         self.primary = primary
+        self.fallback = fallback
     }
     
     private struct Task: FeedImageDataLoaderTask {
@@ -21,7 +23,15 @@ class FeedImageDataLoaderWithFallbackComposite: FeedImageDataLoader {
     }
     
     func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
-        _ = primary.loadImageData(from: url, completion: completion)
+        _ = primary.loadImageData(from: url, completion: { [weak self] result in
+            switch result {
+            case .success:
+                break
+                
+            case .failure:
+                _ = self?.fallback.loadImageData(from: url) { _ in }
+            }
+        })
         return Task()
     }
 }
@@ -41,8 +51,25 @@ class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
         
         _ = sut.loadImageData(from: url) { _ in }
         
-        XCTAssertEqual(primary.loadedURLs, [url], "Expected no loaded URLs in the primary loader")
-        XCTAssertTrue(fallback.loadedURLs.isEmpty, "Expected no loaded URLs in the fallback loader")    }
+        XCTAssertEqual(primary.loadedURLs, [url], "Expected loaded URLs in the primary loader")
+        XCTAssertTrue(fallback.loadedURLs.isEmpty, "Expected no loaded URLs in the fallback loader")
+    }
+    
+    func test_loadImageData_loadsFromFallbackOnPrimaryLoaderFailure() {
+        let url = anyURL()
+        let (sut, primary, fallback) = makeSUT()
+        
+        _ = sut.loadImageData(from: url) { _ in }
+        
+        primary.complete(with: anyNSError())
+        
+        XCTAssertEqual(primary.loadedURLs, [url], "Expected loaded URLs in the primary loader")
+        XCTAssertEqual(fallback.loadedURLs, [url], "Expected loaded URLs in the fallback loader")
+    }
+    
+    private func anyNSError() -> NSError {
+        return NSError(domain: "a error", code: 1)
+    }
     
     private func anyURL() -> URL {
         return URL(string: "https://a-url.com")!
@@ -82,6 +109,10 @@ class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
             messages.append((url: url, completion: completion))
             
             return Task()
+        }
+        
+        func complete(with error: Error, at index: Int = 0) {
+            messages[index].completion(.failure(error))
         }
     }
 }
