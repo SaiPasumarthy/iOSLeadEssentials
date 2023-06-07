@@ -91,14 +91,6 @@ class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
         }
     }
     
-    private func anyNSError() -> NSError {
-        return NSError(domain: "a error", code: 1)
-    }
-    
-    private func anyURL() -> URL {
-        return URL(string: "https://a-url.com")!
-    }
-    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: FeedImageDataLoaderWithFallbackComposite, primary: LoaderSpy, fallback: LoaderSpy) {
@@ -133,11 +125,7 @@ class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
         
         wait(for: [exp], timeout: 1.0)
     }
-    
-    func anyData() -> Data {
-        return Data("any data".utf8)
-    }
-    
+        
     private class LoaderSpy: FeedImageDataLoader {
         private var messages = [(url: URL, completion: (FeedImageDataLoader.Result) -> Void)]()
         
