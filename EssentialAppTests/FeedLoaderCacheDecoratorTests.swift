@@ -39,7 +39,7 @@ class FeedLoaderCacheDecoratorTests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT(result: FeedLoader.Result, file: StaticString = #filePath, line: UInt = #line) -> FeedLoaderCacheDecorator {
-        let loader = LoaderStub(result: result)
+        let loader = FeedLoaderStub(result: result)
         let sut = FeedLoaderCacheDecorator(decoratee: loader)
         
         trackForMemoryLeaks(loader, file: file, line: line)
@@ -69,16 +69,5 @@ class FeedLoaderCacheDecoratorTests: XCTestCase {
     
     private func uniqueFeed() -> [FeedImage] {
         return [FeedImage(id: UUID(), description: "any", location: "any", url: anyURL())]
-    }
-    
-    private class LoaderStub: FeedLoader {
-        private let result: FeedLoader.Result
-        init(result: FeedLoader.Result) {
-            self.result = result
-        }
-        
-        public func load(completion: @escaping (FeedLoader.Result) -> Void) {
-            completion(result)
-        }
     }
 }
