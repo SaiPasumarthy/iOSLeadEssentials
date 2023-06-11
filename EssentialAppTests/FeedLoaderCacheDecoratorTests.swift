@@ -38,10 +38,9 @@ class FeedLoaderCacheDecoratorTests: XCTestCase, FeedLoaderTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(result: FeedLoader.Result, file: StaticString = #filePath, line: UInt = #line) -> FeedLoaderCacheDecorator {
+    private func makeSUT(result: FeedLoader.Result, file: StaticString = #filePath, line: UInt = #line) -> FeedLoader {
         let loader = FeedLoaderStub(result: result)
         let sut = FeedLoaderCacheDecorator(decoratee: loader)
-        
         trackForMemoryLeaks(loader, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return sut
