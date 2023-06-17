@@ -49,6 +49,7 @@
 		9883B3492A3DF02900945076 /* FeedUIIntegrationTests+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9883B3482A3DF02900945076 /* FeedUIIntegrationTests+Localization.swift */; };
 		9883B34B2A3DF0A600945076 /* FeedViewController+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9883B34A2A3DF0A600945076 /* FeedViewController+TestHelpers.swift */; };
 		9883B34D2A3DF11300945076 /* FeedUIIntegrationTests+LoaderSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9883B34C2A3DF11300945076 /* FeedUIIntegrationTests+LoaderSpy.swift */; };
+		9883B34F2A3DF39400945076 /* FeedAcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9883B34E2A3DF39400945076 /* FeedAcceptanceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +129,7 @@
 		9883B3482A3DF02900945076 /* FeedUIIntegrationTests+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedUIIntegrationTests+Localization.swift"; sourceTree = "<group>"; };
 		9883B34A2A3DF0A600945076 /* FeedViewController+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedViewController+TestHelpers.swift"; sourceTree = "<group>"; };
 		9883B34C2A3DF11300945076 /* FeedUIIntegrationTests+LoaderSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedUIIntegrationTests+LoaderSpy.swift"; sourceTree = "<group>"; };
+		9883B34E2A3DF39400945076 /* FeedAcceptanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAcceptanceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +215,7 @@
 				985424D72A3605690043AED8 /* FeedImageDataLoaderCacheDecoratorTests.swift */,
 				9883B3302A3DEA1200945076 /* SceneDelegateTests.swift */,
 				9883B33E2A3DEDEB00945076 /* FeedUIIntegrationTests.swift */,
+				9883B34E2A3DF39400945076 /* FeedAcceptanceTests.swift */,
 			);
 			path = EssentialAppTests;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 			files = (
 				985424CC2A30B0CF0043AED8 /* SharedTestHelpers.swift in Sources */,
 				985424D82A3605690043AED8 /* FeedImageDataLoaderCacheDecoratorTests.swift in Sources */,
+				9883B34F2A3DF39400945076 /* FeedAcceptanceTests.swift in Sources */,
 				9883B34D2A3DF11300945076 /* FeedUIIntegrationTests+LoaderSpy.swift in Sources */,
 				985424D22A35FA920043AED8 /* XCTestCase+FeedLoader.swift in Sources */,
 				985424DC2A360AB30043AED8 /* XCTestCase+FeedImageDataLoader.swift in Sources */,

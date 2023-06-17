@@ -21,7 +21,7 @@ extension FeedImageCell {
     var isShowingImageLoadingIndicator: Bool {
         return self.imageContainer.isShimmering
     }
-    var renderImage: Data? {
+    var renderedImage: Data? {
         return self.feedImage.image?.pngData()!
     }
     var isShowRetryAction: Bool {

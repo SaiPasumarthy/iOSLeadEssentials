@@ -153,18 +153,18 @@ class FeedUIIntegrationTests: XCTestCase {
         let view0 = sut.simulateFeedImageViewVisible(at: 0)
         let view1 = sut.simulateFeedImageViewVisible(at: 1)
         
-        XCTAssertEqual(view0?.renderImage, .none)
-        XCTAssertEqual(view1?.renderImage, .none)
+        XCTAssertEqual(view0?.renderedImage, .none)
+        XCTAssertEqual(view1?.renderedImage, .none)
         
         let image0 = UIImage.make(withColor: .red).pngData()!
         loader.completeImageLoading(image0, at: 0)
-        XCTAssertEqual(view0?.renderImage, image0)
-        XCTAssertEqual(view1?.renderImage, .none)
+        XCTAssertEqual(view0?.renderedImage, image0)
+        XCTAssertEqual(view1?.renderedImage, .none)
         
         let image1 = UIImage.make(withColor: .blue).pngData()!
         loader.completeImageLoading(image1, at: 1)
-        XCTAssertEqual(view0?.renderImage, image0)
-        XCTAssertEqual(view1?.renderImage, image1)
+        XCTAssertEqual(view0?.renderedImage, image0)
+        XCTAssertEqual(view1?.renderedImage, image1)
     }
     
     func test_feedImageViewRetryButton_isVisibleOnImageURLLoadError() {
@@ -270,7 +270,7 @@ class FeedUIIntegrationTests: XCTestCase {
         let image0 = UIImage.make(withColor: .red).pngData()!
         loader.completeImageLoading(image0, at: 0)
         
-        XCTAssertNil(view?.renderImage)
+        XCTAssertNil(view?.renderedImage)
     }
     
     func test_loadFeedCompletion_dispatchsFromBackgroundToMainThread() {
