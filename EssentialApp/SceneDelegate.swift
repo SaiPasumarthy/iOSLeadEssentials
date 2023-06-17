@@ -23,6 +23,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
         
+        configureWindow()
+    }
+
+    func configureWindow() {
         let remoteURL = URL(string: "https://static1.squarespace.com/static/5891c5b8d1758ec68ef5dbc2/t/5db4155a4fbade21d17ecd28/1572083034355/essential_app_feed.json")!
         let client = makeRemoteClient()
         let remoteFeedLoader = RemoteFeedLoader(url: remoteURL, client: client)
@@ -32,7 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let localFeedLoader = LocalFeedLoader(store: localStore, timestamp: Date.init)
         let localImageLoader = LocalFeedImageDataLoader(localStore)
         
-        let feedViewController = FeedUIComposer.feedComposedWith(
+        let feedViewController = UINavigationController(rootViewController: FeedUIComposer.feedComposedWith(
             feedLoader:FeedLoaderWithFallbackComposite(
                 primary: FeedLoaderCacheDecorator(
                     decoratee: remoteFeedLoader,
@@ -43,10 +47,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 fallback: FeedImageDataLoaderCacheDecorator(
                     decoratee: remoteImageLoader,
                     cache: localImageLoader))
-        )
+        ))
         window?.rootViewController = feedViewController
     }
-
     func makeRemoteClient() -> HTTPClient {
         return URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
     }
