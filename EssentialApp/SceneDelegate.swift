@@ -20,30 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
-        
-        let url = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed/v1/feed")!
-        let session = URLSession(configuration: .ephemeral)
-        
-        let client = URLSessionHTTPClient(session: session)
-        let remoteFeedLoader = RemoteFeedLoader(url: url, client: client)
-        let remoteImageLoader = RemoteFeedImageDataLoader(client: client)
-        let localStoreURL = NSPersistentContainer
-            .defaultDirectoryURL()
-            .appendingPathComponent("feed-store.sqlite")
-        
-        let localStore = try! CoreDataFeedStore.init(storeURL: localStoreURL)
-        let localFeedLoader = LocalFeedLoader(store: localStore, timestamp: Date.init)
-        let localImageLoader = LocalFeedImageDataLoader(localStore)
-        
-        let feedViewController = FeedUIComposer.feedComposedWith(feedLoader:
-                                                                    FeedLoaderWithFallbackComposite(
-                                                                        primary: remoteFeedLoader,
-                                                                        fallback: localFeedLoader),
-                                                                 imageLoader:
-                                                                    FeedImageDataLoaderWithFallbackComposite(
-                                                                        primary: localImageLoader,
-                                                                        fallback: remoteImageLoader))
-        window?.rootViewController = feedViewController
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
