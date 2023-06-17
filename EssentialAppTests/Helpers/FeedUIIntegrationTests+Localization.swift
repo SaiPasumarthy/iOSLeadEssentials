@@ -1,13 +1,12 @@
 //
-//  FeedViewControllerTests+Localize.swift
-//  EssentialFeediOSTests
+//  FeedUIIntegrationTests+Localization.swift
+//  EssentialAppTests
 //
-//  Created by Sai Pasumarthy on 14/04/23.
+//  Created by Sai Pasumarthy on 17/06/23.
 //
 
-import Foundation
-import XCTest
 import EssentialFeed
+import XCTest
 
 extension FeedUIIntegrationTests {
     func localized(_ key: String, file: StaticString = #filePath, line: UInt = #line) -> String {
