@@ -13,8 +13,10 @@ class EssentialAppUIAcceptanceTests: XCTestCase {
         let app = XCUIApplication()
         
         app.launch()
+        let feedCells = app.cells.matching(identifier: "feed-image-cell")
+        XCTAssertEqual(feedCells.count, 22)
         
-        XCTAssertEqual(app.cells.count, 22)
-//        XCTAssertEqual(app.cells.firstMatch.images.count, 1)
+        let firstImage = app.images.matching(identifier: "feed-image-view").firstMatch
+        XCTAssertTrue(firstImage.exists)
     }
 }
