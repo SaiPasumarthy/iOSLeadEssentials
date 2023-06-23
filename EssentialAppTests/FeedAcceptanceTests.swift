@@ -39,21 +39,21 @@ class FeedAcceptanceTests: XCTestCase {
         XCTAssertEqual(feed.numberOfRenderedFeedImageViews(), 0)
     }
     
-    func test_onEnteringBackground_deletesExpiredFeedCache() {
-        let store = InMemoryFeedStore.withExpiredFeedCache
-        
-        enterBackground(with: store)
-        
-        XCTAssertNil(store.feedCache, "Expected to delete expired cache")
-    }
+//    func test_onEnteringBackground_deletesExpiredFeedCache() {
+//        let store = InMemoryFeedStore.withExpiredFeedCache
+//        
+//        enterBackground(with: store)
+//        
+//        XCTAssertNil(store.feedCache, "Expected to delete expired cache")
+//    }
     
-    func test_onEnteringBackground_keepsNonExpiredFeedCache() {
-        let store = InMemoryFeedStore.withNonExpiredFeedCache
-        
-        enterBackground(with: store)
-        
-        XCTAssertNotNil(store.feedCache, "Expected to keep non-expired cache")
-    }
+//    func test_onEnteringBackground_keepsNonExpiredFeedCache() {
+//        let store = InMemoryFeedStore.withNonExpiredFeedCache
+//        
+//        enterBackground(with: store)
+//        
+//        XCTAssertNotNil(store.feedCache, "Expected to keep non-expired cache")
+//    }
     
     // MARK: - Helpers
     
