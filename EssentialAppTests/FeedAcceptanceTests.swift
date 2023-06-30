@@ -16,8 +16,8 @@ class FeedAcceptanceTests: XCTestCase {
         let feed = launch(httpClient: .online(response), store: .empty)
         
         XCTAssertEqual(feed.numberOfRenderedFeedImageViews(), 2)
-//        XCTAssertEqual(feed.renderedFeedImageData(at: 0), makeImageData())
-//        XCTAssertEqual(feed.renderedFeedImageData(at: 1), makeImageData())
+        XCTAssertEqual(feed.renderedFeedImageData(at: 0), makeImageData())
+        XCTAssertEqual(feed.renderedFeedImageData(at: 1), makeImageData())
     }
     
     func test_onLaunch_displaysCachedRemoteFeedWhenCustomersHasNoConnectivity() {
@@ -29,8 +29,8 @@ class FeedAcceptanceTests: XCTestCase {
         let offlineFeed = launch(httpClient: .offline, store: sharedStore)
         
         XCTAssertEqual(offlineFeed.numberOfRenderedFeedImageViews(), 2)
-//        XCTAssertEqual(offlineFeed.renderedFeedImageData(at: 0), makeImageData())
-//        XCTAssertEqual(offlineFeed.renderedFeedImageData(at: 1), makeImageData())
+        XCTAssertEqual(offlineFeed.renderedFeedImageData(at: 0), makeImageData())
+        XCTAssertEqual(offlineFeed.renderedFeedImageData(at: 1), makeImageData())
     }
     
     func test_onLaunch_displaysEmptyFeedWhenCustomersHasNoConnectivityAndNoCache() {
@@ -39,21 +39,21 @@ class FeedAcceptanceTests: XCTestCase {
         XCTAssertEqual(feed.numberOfRenderedFeedImageViews(), 0)
     }
     
-//    func test_onEnteringBackground_deletesExpiredFeedCache() {
-//        let store = InMemoryFeedStore.withExpiredFeedCache
-//        
-//        enterBackground(with: store)
-//        
-//        XCTAssertNil(store.feedCache, "Expected to delete expired cache")
-//    }
+    func test_onEnteringBackground_deletesExpiredFeedCache() {
+        let store = InMemoryFeedStore.withExpiredFeedCache
+        
+        enterBackground(with: store)
+        
+        XCTAssertNil(store.feedCache, "Expected to delete expired cache")
+    }
     
-//    func test_onEnteringBackground_keepsNonExpiredFeedCache() {
-//        let store = InMemoryFeedStore.withNonExpiredFeedCache
-//        
-//        enterBackground(with: store)
-//        
-//        XCTAssertNotNil(store.feedCache, "Expected to keep non-expired cache")
-//    }
+    func test_onEnteringBackground_keepsNonExpiredFeedCache() {
+        let store = InMemoryFeedStore.withNonExpiredFeedCache
+        
+        enterBackground(with: store)
+        
+        XCTAssertNotNil(store.feedCache, "Expected to keep non-expired cache")
+    }
     
     // MARK: - Helpers
     
