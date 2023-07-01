@@ -62,6 +62,20 @@ class FeedUIIntegrationTests: XCTestCase {
         assertThat(sut, isRendering: [image0, image1, image2, image3])
     }
     
+    func test_loadFeedCompletion_rendersSuccessfullyLoadedEmptyFeedAfterNonEmptyFeed() {
+        let image0 = makeImage()
+        let image1 = makeImage()
+        let (sut, loader) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        loader.completeFeedLoading(with: [image0, image1], at: 0)
+        assertThat(sut, isRendering: [image0, image1])
+                
+        sut.simulateUserInitiatedFeedLoad()
+        loader.completeFeedLoading(with: [], at: 0)
+        assertThat(sut, isRendering: [])
+    }
+    
     func test_loadFeedCompletion_doesnotAlterCurrentRenderingStateOnError() {
         let image0 = makeImage(description: "a description", location: "a location")
         let (sut, loader) = makeSUT()
@@ -314,6 +328,9 @@ class FeedUIIntegrationTests: XCTestCase {
     }
     func assertThat(_ sut: FeedViewController, isRendering feed: [FeedImage],
                     file: StaticString = #filePath, line: UInt = #line) {
+        sut.tableView.layoutIfNeeded()
+        RunLoop.main.run(until: Date())
+        
         guard sut.numberOfRenderedFeedImageViews() == feed.count else {
             XCTFail("Feed Image cell count didn't match", file: file, line: line)
             return
