@@ -328,8 +328,7 @@ class FeedUIIntegrationTests: XCTestCase {
     }
     func assertThat(_ sut: FeedViewController, isRendering feed: [FeedImage],
                     file: StaticString = #filePath, line: UInt = #line) {
-        sut.tableView.layoutIfNeeded()
-        RunLoop.main.run(until: Date())
+        sut.view.enforceLayoutCycle()
         
         guard sut.numberOfRenderedFeedImageViews() == feed.count else {
             XCTFail("Feed Image cell count didn't match", file: file, line: line)
