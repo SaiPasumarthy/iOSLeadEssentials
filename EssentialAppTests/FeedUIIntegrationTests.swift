@@ -338,6 +338,7 @@ class FeedUIIntegrationTests: XCTestCase {
         feed.enumerated().forEach { index, image in
             assertThat(sut, hasViewConfiguredFor: image, at: index, file: file, line: line)
         }
+        executeRunLoopToCleanUpReferences()
     }
     func assertThat(_ sut: FeedViewController, hasViewConfiguredFor image: FeedImage, at index: Int,
                     file: StaticString = #filePath, line: UInt = #line) {
@@ -354,5 +355,8 @@ class FeedUIIntegrationTests: XCTestCase {
     func makeImage(description: String? = nil, location: String? = nil,
                    url: URL = URL(string: "https://any-url.com")!) -> FeedImage {
         return FeedImage(id: UUID(), description: description, location: location, url: url)
+    }
+    private func executeRunLoopToCleanUpReferences() {
+        RunLoop.current.run(until: Date())
     }
 }
