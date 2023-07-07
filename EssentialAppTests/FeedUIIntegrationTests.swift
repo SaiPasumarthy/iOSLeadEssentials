@@ -50,13 +50,11 @@ class FeedUIIntegrationTests: XCTestCase {
         let (sut, loader) = makeSUT()
         
         sut.loadViewIfNeeded()
+        assertThat(sut, isRendering: [])
         
         loader.completeFeedLoading(with: [image0], at: 0)
         assertThat(sut, isRendering: [image0])
-        
-        loader.completeFeedLoading(with: [image0, image1], at: 0)
-        assertThat(sut, isRendering: [image0, image1])
-        
+                
         sut.simulateUserInitiatedFeedLoad()
         loader.completeFeedLoading(with: [image0, image1, image2, image3], at: 1)
         assertThat(sut, isRendering: [image0, image1, image2, image3])
@@ -72,7 +70,7 @@ class FeedUIIntegrationTests: XCTestCase {
         assertThat(sut, isRendering: [image0, image1])
                 
         sut.simulateUserInitiatedFeedLoad()
-        loader.completeFeedLoading(with: [], at: 0)
+        loader.completeFeedLoading(with: [], at: 1)
         assertThat(sut, isRendering: [])
     }
     
