@@ -26,7 +26,9 @@ public final class RemoteFeedLoader: FeedLoader {
 #warning("URL is detail implementation and shouldn't be in public interface. But the doubt is how does every client of RemoteFeedLoader know of url to request data from")
     public func load(completion: @escaping (Result) -> Void) {
         client.get(from: url) { [weak self] result in
-            guard self != nil else { return }
+            guard self != nil else {
+                return
+            }
             
             switch result {
             case let .success((data, response)):

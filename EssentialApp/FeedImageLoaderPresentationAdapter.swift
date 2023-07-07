@@ -5,16 +5,17 @@
 //  Created by Sai Pasumarthy on 15/04/23.
 //
 
+import Combine
 import Foundation
 import EssentialFeed
 import EssentialFeediOS
 
 final class FeedImageLoaderPresentationAdapter<View: FeedImageView, Image>: FeedImageCellControllerDelegate where View.Image == Image {
-    private let imageLoader: FeedImageDataLoader
+    private var cancellable: Cancellable?
+    private let imageLoader: (URL) -> FeedImageDataLoader.Publisher
     private let feed: FeedImage
-    private var task: FeedImageDataLoaderTask?
     var presenter: FeedImagePresenter<View, Image>?
-    init(imageLoader: FeedImageDataLoader, feed: FeedImage) {
+    init(imageLoader: @escaping (URL) -> FeedImageDataLoader.Publisher, feed: FeedImage) {
         self.imageLoader = imageLoader
         self.feed = feed
     }
@@ -22,17 +23,21 @@ final class FeedImageLoaderPresentationAdapter<View: FeedImageView, Image>: Feed
     func didRequestImage() {
         presenter?.didStartLoadingImageData(for: feed)
         let model = self.feed
-        task = imageLoader.loadImageData(from: feed.url) { [weak self] result in
-            switch result {
-            case let .success(data):
+        
+        cancellable = imageLoader(model.url)
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished: break
+                    
+                case let .failure(error):
+                    self?.presenter?.didFinishLoadingImageData(with: error, for: model)
+                }
+            } receiveValue: { [weak self] data in
                 self?.presenter?.didFinishLoadingImageData(with: data, for: model)
-            case let .failure(error):
-                self?.presenter?.didFinishLoadingImageData(with: error, for: model)
             }
-        }
     }
     
     func didCancelRequestImage() {
-        task?.cancel()
+        cancellable?.cancel()
     }
 }
