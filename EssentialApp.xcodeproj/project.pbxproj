@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9810F3DA2A502A64008A11B9 /* UIView+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810F3D92A502A64008A11B9 /* UIView+TestHelpers.swift */; };
+		9810F4072A5819D4008A11B9 /* CombineHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810F4062A5819D4008A11B9 /* CombineHelpers.swift */; };
 		985424892A2C67E90043AED8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985424882A2C67E90043AED8 /* AppDelegate.swift */; };
 		9854248B2A2C67E90043AED8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854248A2A2C67E90043AED8 /* SceneDelegate.swift */; };
 		9854248D2A2C67E90043AED8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854248C2A2C67E90043AED8 /* ViewController.swift */; };
@@ -70,6 +71,7 @@
 
 /* Begin PBXFileReference section */
 		9810F3D92A502A64008A11B9 /* UIView+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+TestHelpers.swift"; sourceTree = "<group>"; };
+		9810F4062A5819D4008A11B9 /* CombineHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineHelpers.swift; sourceTree = "<group>"; };
 		985424852A2C67E90043AED8 /* EssentialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EssentialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		985424882A2C67E90043AED8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9854248A2A2C67E90043AED8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			children = (
 				985424882A2C67E90043AED8 /* AppDelegate.swift */,
 				9854248A2A2C67E90043AED8 /* SceneDelegate.swift */,
+				9810F4062A5819D4008A11B9 /* CombineHelpers.swift */,
 				9883B3322A3DED5600945076 /* FeedUIComposer.swift */,
 				9883B3362A3DED5600945076 /* WeakRefVirtualProxy.swift */,
 				9883B3342A3DED5600945076 /* FeedViewAdapter.swift */,
@@ -312,6 +315,7 @@
 			files = (
 				9883B33D2A3DED5600945076 /* FeedViewAdapter.swift in Sources */,
 				9883B33A2A3DED5600945076 /* FeedLoaderPresentationAdapter.swift in Sources */,
+				9810F4072A5819D4008A11B9 /* CombineHelpers.swift in Sources */,
 				9854248D2A2C67E90043AED8 /* ViewController.swift in Sources */,
 				985424892A2C67E90043AED8 /* AppDelegate.swift in Sources */,
 				9854248B2A2C67E90043AED8 /* SceneDelegate.swift in Sources */,
