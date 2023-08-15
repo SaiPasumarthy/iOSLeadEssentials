@@ -30,7 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         LocalFeedLoader(store: store, timestamp: Date.init)
     }()
     
-    private lazy var remoteFeedLoader = RemoteFeedLoader(url: remoteURL, client: httpClient)
+    private lazy var remoteFeedLoader = RemoteLoader(url: remoteURL, client: httpClient, mapper: FeedItemMapper.map)
     
     convenience init(httpClient: HTTPClient, store: FeedStore & FeedImageDataStore) {
         self.init()
@@ -52,11 +52,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func configureWindow() {
-        let remoteImageLoader = RemoteFeedImageDataLoader(client: httpClient)
-        
-        let localFeedLoader = LocalFeedLoader(store: store, timestamp: Date.init)
-        let localImageLoader = LocalFeedImageDataLoader(store)
-        
         let feedViewController = UINavigationController(rootViewController: FeedUIComposer.feedComposedWith(
             feedLoader: makeRemoteFeedLoaderWithLocalFallback,
             imageLoader: makeLocalImageLoaderWithRemoteFallback
