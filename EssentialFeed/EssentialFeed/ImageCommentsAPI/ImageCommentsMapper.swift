@@ -27,7 +27,7 @@ final class ImageCommentsMapper {
         }
     }
         
-    static func map(_ data: Data, from response: HTTPURLResponse) throws -> [ImageComment] {
+    static func map(_ data: Data, response: HTTPURLResponse) throws -> [ImageComment] {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         
