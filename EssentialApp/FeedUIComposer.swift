@@ -22,7 +22,14 @@ public final class FeedUIComposer {
             title: FeedPresenter.feedTitle)
         
         let feedAdapter = FeedViewAdapter(controller: feedViewController, loader: { imageLoader($0).dispatchOnMainQueue() })
-        let presenter = FeedPresenter(feedView: feedAdapter, loadingView: WeakRefVirtualProxy(feedViewController), feedErrorView: WeakRefVirtualProxy(feedViewController))
+        
+        let presenter = LoadResourcePresenter(
+            resourceView: feedAdapter,
+            loadingView: WeakRefVirtualProxy(feedViewController),
+            feedErrorView: WeakRefVirtualProxy(feedViewController),
+            mapper: FeedPresenter.map
+        )
+        
         feedLoaderPresenterAdapter.feedPresenter = presenter
         return feedViewController
     }

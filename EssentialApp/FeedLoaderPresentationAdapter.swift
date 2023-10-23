@@ -12,13 +12,13 @@ import Combine
 final class FeedLoaderPresentationAdapter: FeedViewControllerDelegate {
     private var cancellable: Cancellable?
     private let feedLoader: () -> AnyPublisher<[FeedImage], Error>
-    var feedPresenter: FeedPresenter?
+    var feedPresenter: LoadResourcePresenter<[FeedImage], FeedViewAdapter>?
     init(feedLoader: @escaping () -> AnyPublisher<[FeedImage], Error>) {
         self.feedLoader = feedLoader
     }
     
     func didRequestFeedRefresh() {
-        feedPresenter?.didStartLoadingFeed()
+        feedPresenter?.didStartLoading()
         
         cancellable = feedLoader()
             .sink { [weak self] completion in
@@ -26,10 +26,10 @@ final class FeedLoaderPresentationAdapter: FeedViewControllerDelegate {
                 case .finished: break
                     
                 case let .failure(error):
-                    self?.feedPresenter?.didFinishLoadingFeed(with: error)
+                    self?.feedPresenter?.didFinishLoading(with: error)
                 }
             } receiveValue: { [weak self] feed in
-                self?.feedPresenter?.didFinishLoadingFeed(with: feed)
+                self?.feedPresenter?.didFinishLoading(with: feed)
             }
     }
 }
