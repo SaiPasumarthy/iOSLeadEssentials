@@ -614,7 +614,6 @@
 		98D28E5529CB041500E4BB54 /* EssentialFeediOS */ = {
 			isa = PBXGroup;
 			children = (
-				98D28EB529DECFCC00E4BB54 /* FeedPresentation */,
 				98D28EA329D449F100E4BB54 /* FeedUI */,
 			);
 			path = EssentialFeediOS;
@@ -668,13 +667,6 @@
 				981C7B4729E870EF001993BA /* Feed.xcassets */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		98D28EB529DECFCC00E4BB54 /* FeedPresentation */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = FeedPresentation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
