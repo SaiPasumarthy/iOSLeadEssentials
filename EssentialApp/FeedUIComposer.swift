@@ -13,9 +13,11 @@ import Combine
 public final class FeedUIComposer {
     private init() {}
     
+    private typealias FeedPresentationAdapter = LoadResourcePresentationAdapter<[FeedImage], FeedViewAdapter>
+    
     public static func feedComposedWith(feedLoader: @escaping () -> AnyPublisher<[FeedImage], Error>,
                                         imageLoader: @escaping (URL) -> FeedImageDataLoader.Publisher) -> FeedViewController {
-        let feedLoaderPresenterAdapter = LoadResourcePresentationAdapter<[FeedImage], FeedViewAdapter>(
+        let feedLoaderPresenterAdapter = FeedPresentationAdapter(
             loader: { feedLoader().dispatchOnMainQueue() })
         
         let feedViewController = makeFeedViewController(
