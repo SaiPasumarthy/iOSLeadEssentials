@@ -25,7 +25,7 @@ public final class LoadResourcePresenter {
                                  comment: "Error message displayed when we can't load the image feed from the server")
     }
     
-    public func didStartLoadingFeed() {
+    public func didStartLoading() {
         feedErrorView.display(viewModel: FeedErrorViewModel.noError)
         loadingView.display(viewModel: FeedLoadingViewModel(isLoading: true))
     }
