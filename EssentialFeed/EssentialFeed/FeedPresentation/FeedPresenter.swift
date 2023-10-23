@@ -36,13 +36,17 @@ public final class FeedPresenter {
                                  comment: "Error message displayed when we can't load the image feed from the server")
     }
     
+    public static func map(_ feed: [FeedImage]) -> FeedViewModel {
+        FeedViewModel(feed: feed)
+    }
+    
     public func didStartLoadingFeed() {
         feedErrorView.display(viewModel: ResourceErrorViewModel.noError)
         loadingView.display(viewModel: ResourceLoadingViewModel(isLoading: true))
     }
     
     public func didFinishLoadingFeed(with feed: [FeedImage]) {
-        feedView.display(viewModel: FeedViewModel(feed: feed))
+        feedView.display(viewModel: Self.map(feed))
         loadingView.display(viewModel: ResourceLoadingViewModel(isLoading: false))
     }
     
