@@ -11,7 +11,7 @@ import EssentialFeed
 final class ImageCommentsPresenterTests: XCTestCase {
 
     func test_title_isLocalized() {
-        XCTAssertEqual(ImageCommentsPresenter.title, localise("IAMGE_COMMENTS_VIEW_TITLE"))
+        XCTAssertEqual(ImageCommentsPresenter.title, localise("IMAGE_COMMENTS_VIEW_TITLE"))
     }
     
     private func localise(_ key: String, file: StaticString = #filePath, line: UInt = #line) -> String {
