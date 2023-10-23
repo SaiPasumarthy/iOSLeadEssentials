@@ -8,7 +8,7 @@
 import Foundation
 
 public final class ImageCommentsPresenter {
-    public static var feedTitle: String {
+    public static var title: String {
         return NSLocalizedString("IMAGE_COMMENTS_VIEW_TITLE",
                                  tableName: "ImageComments",
                                  bundle: Bundle(for: Self.self),
