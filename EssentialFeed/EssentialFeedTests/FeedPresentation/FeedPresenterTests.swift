@@ -64,7 +64,7 @@ class FeedPresenterTests: XCTestCase {
         return value
     }
     
-    private class ViewSpy: FeedErrorView, ResourceLoadingView, FeedView {
+    private class ViewSpy: ResourceErrorView, ResourceLoadingView, FeedView {
         enum Message: Equatable {
             case display(errorMessage: String?)
             case display(isLoading: Bool)
@@ -73,7 +73,7 @@ class FeedPresenterTests: XCTestCase {
         
         var messages: [Message] = []
         
-        func display(viewModel: FeedErrorViewModel) {
+        func display(viewModel: ResourceErrorViewModel) {
             messages.append(.display(errorMessage: viewModel.message))
         }
         
