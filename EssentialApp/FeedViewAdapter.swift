@@ -28,7 +28,7 @@ final class FeedViewAdapter: ResourceView {
             })
             
             let view = FeedImageCellController(
-                viewModel: FeedImagePresenter<FeedImageCellController, UIImage>.map(feedImage),
+                viewModel: FeedImagePresenter.map(feedImage),
                 delegate: adapter)
             
             
