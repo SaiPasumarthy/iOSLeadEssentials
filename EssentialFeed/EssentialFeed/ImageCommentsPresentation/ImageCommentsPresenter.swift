@@ -12,9 +12,9 @@ public struct ImageCommentsViewModel: Equatable {
 }
 
 public struct ImageCommentViewModel: Equatable {
-    let message: String
-    let date: String
-    let username: String
+    public let message: String
+    public let date: String
+    public let username: String
     
     public init(message: String, date: String, username: String) {
         self.message = message

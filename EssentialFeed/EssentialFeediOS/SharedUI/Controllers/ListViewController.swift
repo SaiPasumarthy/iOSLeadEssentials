@@ -13,7 +13,7 @@ public protocol FeedViewControllerDelegate {
 }
 
 public protocol CellControler {
-    func view(in: UITableView) -> UITableViewCell
+    func view(in tableView: UITableView) -> UITableViewCell
     func preload()
     func cancelLoad()
 }
