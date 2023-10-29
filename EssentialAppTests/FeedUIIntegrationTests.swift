@@ -325,14 +325,14 @@ class FeedUIIntegrationTests: XCTestCase {
     
     //MARK: Helpers
     
-    func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: FeedViewController, loader: FeedLoaderSpy) {
+    func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: ListViewController, loader: FeedLoaderSpy) {
         let loader = FeedLoaderSpy()
         let sut = FeedUIComposer.feedComposedWith(feedLoader: loader.loadPublisher, imageLoader: loader.loadImageDataPublisher)
         trackForMemoryLeaks(loader, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, loader)
     }
-    func assertThat(_ sut: FeedViewController, isRendering feed: [FeedImage],
+    func assertThat(_ sut: ListViewController, isRendering feed: [FeedImage],
                     file: StaticString = #filePath, line: UInt = #line) {
         sut.view.enforceLayoutCycle()
         
@@ -345,7 +345,7 @@ class FeedUIIntegrationTests: XCTestCase {
         }
         executeRunLoopToCleanUpReferences()
     }
-    func assertThat(_ sut: FeedViewController, hasViewConfiguredFor image: FeedImage, at index: Int,
+    func assertThat(_ sut: ListViewController, hasViewConfiguredFor image: FeedImage, at index: Int,
                     file: StaticString = #filePath, line: UInt = #line) {
         let feedImageCell = sut.feedImageView(at: index) as? FeedImageCell
         guard let feedImageCell = feedImageCell else {
