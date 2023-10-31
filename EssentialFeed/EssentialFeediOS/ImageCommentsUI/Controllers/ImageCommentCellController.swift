@@ -22,10 +22,4 @@ public final class ImageCommentCellController: CellControler {
         cell.dateLabel.text = model.date
         return cell
     }
-    
-    public func preload() {
-    }
-    
-    public func cancelLoad() {
-    }
 }
