@@ -70,7 +70,7 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
     }
     
     public func display(viewModel: ResourceErrorViewModel) {
-        errorView.errorMessage = viewModel.message
+        errorView.errorMessage = "Error"//viewModel.message
     }
     
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
