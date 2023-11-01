@@ -44,6 +44,7 @@
 		9810F4A42AF09CF2008A11B9 /* IMAGE_COMMENTS_light_extraExtraExtraLarge.png in Resources */ = {isa = PBXBuildFile; fileRef = 9810F4A32AF09CF2008A11B9 /* IMAGE_COMMENTS_light_extraExtraExtraLarge.png */; };
 		9810F4A62AF09E56008A11B9 /* FEED_WITH_CONTENT_light_extraExtraExtraLarge.png in Resources */ = {isa = PBXBuildFile; fileRef = 9810F4A52AF09E56008A11B9 /* FEED_WITH_CONTENT_light_extraExtraExtraLarge.png */; };
 		9810F4A82AF09F8A008A11B9 /* FEED_WITH_FAILED_IMAGE_LOADING_light_extraExtraExtraLarge.png in Resources */ = {isa = PBXBuildFile; fileRef = 9810F4A72AF09F8A008A11B9 /* FEED_WITH_FAILED_IMAGE_LOADING_light_extraExtraExtraLarge.png */; };
+		9810F4AA2AF220F8008A11B9 /* UIView+Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810F4A92AF220F8008A11B9 /* UIView+Container.swift */; };
 		981C7B4629E870AC001993BA /* Feed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 981C7B4529E870AC001993BA /* Feed.storyboard */; };
 		981C7B4829E870EF001993BA /* Feed.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 981C7B4729E870EF001993BA /* Feed.xcassets */; };
 		981C7B4A29E87F73001993BA /* UITableView+Dequeueing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981C7B4929E87F73001993BA /* UITableView+Dequeueing.swift */; };
@@ -218,6 +219,7 @@
 		9810F4A32AF09CF2008A11B9 /* IMAGE_COMMENTS_light_extraExtraExtraLarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMAGE_COMMENTS_light_extraExtraExtraLarge.png; sourceTree = "<group>"; };
 		9810F4A52AF09E56008A11B9 /* FEED_WITH_CONTENT_light_extraExtraExtraLarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FEED_WITH_CONTENT_light_extraExtraExtraLarge.png; sourceTree = "<group>"; };
 		9810F4A72AF09F8A008A11B9 /* FEED_WITH_FAILED_IMAGE_LOADING_light_extraExtraExtraLarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FEED_WITH_FAILED_IMAGE_LOADING_light_extraExtraExtraLarge.png; sourceTree = "<group>"; };
+		9810F4A92AF220F8008A11B9 /* UIView+Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Container.swift"; sourceTree = "<group>"; };
 		981C7B4529E870AC001993BA /* Feed.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Feed.storyboard; sourceTree = "<group>"; };
 		981C7B4729E870EF001993BA /* Feed.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Feed.xcassets; sourceTree = "<group>"; };
 		981C7B4929E87F73001993BA /* UITableView+Dequeueing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Dequeueing.swift"; sourceTree = "<group>"; };
@@ -469,6 +471,7 @@
 				985423E729FC1BCC0043AED8 /* UIRefreshControl+Helpers.swift */,
 				981C7B4929E87F73001993BA /* UITableView+Dequeueing.swift */,
 				9883B3592A3F0A5A00945076 /* UITableView+HeaderSizing.swift */,
+				9810F4A92AF220F8008A11B9 /* UIView+Container.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1222,6 +1225,7 @@
 				9883B35A2A3F0A5A00945076 /* UITableView+HeaderSizing.swift in Sources */,
 				98D28EA229D03C8E00E4BB54 /* UIView+Shimmering.swift in Sources */,
 				985423E829FC1BCC0043AED8 /* UIRefreshControl+Helpers.swift in Sources */,
+				9810F4AA2AF220F8008A11B9 /* UIView+Container.swift in Sources */,
 				9810F4A02AF08AD1008A11B9 /* CellController.swift in Sources */,
 				98D28E9329CDAC5F00E4BB54 /* ListViewController.swift in Sources */,
 				985423DF29FC12910043AED8 /* ErrorView.swift in Sources */,
