@@ -27,10 +27,10 @@ class FeedUIIntegrationTests: XCTestCase {
         sut.loadViewIfNeeded()
         XCTAssertEqual(loader.loadCallCount, 1)
         
-        sut.simulateUserInitiatedFeedLoad()
+        sut.simulateUserInitiatedReload()
         XCTAssertEqual(loader.loadCallCount, 2)
         
-        sut.simulateUserInitiatedFeedLoad()
+        sut.simulateUserInitiatedReload()
         XCTAssertEqual(loader.loadCallCount, 3)
     }
         
@@ -43,7 +43,7 @@ class FeedUIIntegrationTests: XCTestCase {
         loader.completeFeedLoading(at: 0)
         XCTAssertEqual(sut.isShowingLoadingIndicator, false)
         
-        sut.simulateUserInitiatedFeedLoad()
+        sut.simulateUserInitiatedReload()
         XCTAssertEqual(sut.isShowingLoadingIndicator, true)
         
         loader.completeFeedLoadingWithError(at: 1)
@@ -63,7 +63,7 @@ class FeedUIIntegrationTests: XCTestCase {
         loader.completeFeedLoading(with: [image0], at: 0)
         assertThat(sut, isRendering: [image0])
                 
-        sut.simulateUserInitiatedFeedLoad()
+        sut.simulateUserInitiatedReload()
         loader.completeFeedLoading(with: [image0, image1, image2, image3], at: 1)
         assertThat(sut, isRendering: [image0, image1, image2, image3])
     }
@@ -77,7 +77,7 @@ class FeedUIIntegrationTests: XCTestCase {
         loader.completeFeedLoading(with: [image0, image1], at: 0)
         assertThat(sut, isRendering: [image0, image1])
                 
-        sut.simulateUserInitiatedFeedLoad()
+        sut.simulateUserInitiatedReload()
         loader.completeFeedLoading(with: [], at: 1)
         assertThat(sut, isRendering: [])
     }
@@ -91,7 +91,7 @@ class FeedUIIntegrationTests: XCTestCase {
         loader.completeFeedLoading(with: [image0], at: 0)
         assertThat(sut, isRendering: [image0])
         
-        sut.simulateUserInitiatedFeedLoad()
+        sut.simulateUserInitiatedReload()
         loader.completeFeedLoadingWithError(at: 0)
         assertThat(sut, isRendering: [image0])
     }
@@ -105,7 +105,7 @@ class FeedUIIntegrationTests: XCTestCase {
         loader.completeFeedLoadingWithError(at: 0)
         XCTAssertEqual(sut.errorMessage, loadError)
         
-        sut.simulateUserInitiatedFeedLoad()
+        sut.simulateUserInitiatedReload()
         XCTAssertEqual(sut.errorMessage, nil)
     }
     

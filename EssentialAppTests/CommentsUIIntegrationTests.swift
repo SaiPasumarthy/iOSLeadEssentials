@@ -21,18 +21,18 @@ final class CommentsUIIntegrationTests: XCTestCase {
         XCTAssertEqual(sut.title, commentsTitle)
     }
     
-    func test_loadFeedActions_requestFeedFromLoader() {
+    func test_loadCommentsActions_requestCommentsFromLoader() {
         let (sut, loader) = makeSUT()
-        XCTAssertEqual(loader.loadCallCount, 0)
+        XCTAssertEqual(loader.loadCommentsCallCount, 0)
 
         sut.loadViewIfNeeded()
-        XCTAssertEqual(loader.loadCallCount, 1)
+        XCTAssertEqual(loader.loadCommentsCallCount, 1)
         
-        sut.simulateUserInitiatedFeedLoad()
-        XCTAssertEqual(loader.loadCallCount, 2)
+        sut.simulateUserInitiatedReload()
+        XCTAssertEqual(loader.loadCommentsCallCount, 2)
         
-        sut.simulateUserInitiatedFeedLoad()
-        XCTAssertEqual(loader.loadCallCount, 3)
+        sut.simulateUserInitiatedReload()
+        XCTAssertEqual(loader.loadCommentsCallCount, 3)
     }
         
     func test_loadingFeedIndicator_isVisibleWhileLoadingFeed() {
@@ -44,7 +44,7 @@ final class CommentsUIIntegrationTests: XCTestCase {
         loader.completeFeedLoading(at: 0)
         XCTAssertEqual(sut.isShowingLoadingIndicator, false)
         
-        sut.simulateUserInitiatedFeedLoad()
+        sut.simulateUserInitiatedReload()
         XCTAssertEqual(sut.isShowingLoadingIndicator, true)
         
         loader.completeFeedLoadingWithError(at: 1)
@@ -64,7 +64,7 @@ final class CommentsUIIntegrationTests: XCTestCase {
         loader.completeFeedLoading(with: [image0], at: 0)
         assertThat(sut, isRendering: [image0])
                 
-        sut.simulateUserInitiatedFeedLoad()
+        sut.simulateUserInitiatedReload()
         loader.completeFeedLoading(with: [image0, image1, image2, image3], at: 1)
         assertThat(sut, isRendering: [image0, image1, image2, image3])
     }
@@ -78,7 +78,7 @@ final class CommentsUIIntegrationTests: XCTestCase {
         loader.completeFeedLoading(with: [image0, image1], at: 0)
         assertThat(sut, isRendering: [image0, image1])
                 
-        sut.simulateUserInitiatedFeedLoad()
+        sut.simulateUserInitiatedReload()
         loader.completeFeedLoading(with: [], at: 1)
         assertThat(sut, isRendering: [])
     }
@@ -92,7 +92,7 @@ final class CommentsUIIntegrationTests: XCTestCase {
         loader.completeFeedLoading(with: [image0], at: 0)
         assertThat(sut, isRendering: [image0])
         
-        sut.simulateUserInitiatedFeedLoad()
+        sut.simulateUserInitiatedReload()
         loader.completeFeedLoadingWithError(at: 0)
         assertThat(sut, isRendering: [image0])
     }
@@ -106,7 +106,7 @@ final class CommentsUIIntegrationTests: XCTestCase {
         loader.completeFeedLoadingWithError(at: 0)
         XCTAssertEqual(sut.errorMessage, loadError)
         
-        sut.simulateUserInitiatedFeedLoad()
+        sut.simulateUserInitiatedReload()
         XCTAssertEqual(sut.errorMessage, nil)
     }
     
@@ -165,54 +165,25 @@ final class CommentsUIIntegrationTests: XCTestCase {
         RunLoop.current.run(until: Date())
     }
 
-    private class LoaderSpy: FeedImageDataLoader {
+    private class LoaderSpy {
+        private var requests: [PassthroughSubject<[FeedImage], Error>] = []
         
-        // MARK: - FeedLoader
-        private var feedRequests: [PassthroughSubject<[FeedImage], Error>] = []
-        var loadCallCount: Int { return feedRequests.count }
+        var loadCommentsCallCount: Int { return requests.count }
         
         func loadPublisher() -> AnyPublisher<[FeedImage], Error> {
             let publisher = PassthroughSubject<[FeedImage], Error>()
-            feedRequests.append(publisher)
+            requests.append(publisher)
             
             return publisher.eraseToAnyPublisher()
         }
         
         func completeFeedLoading(with feed: [FeedImage] = [], at index: Int) {
-            feedRequests[index].send(feed)
+            requests[index].send(feed)
         }
         
         func completeFeedLoadingWithError(at index: Int) {
             let anyError = NSError(domain: "any error", code: 0)
-            feedRequests[index].send(completion: .failure(anyError))
-        }
-        
-        // MARK: - FeedImageDataLoader
-        private(set) var cancelledImageURLs = [URL]()
-        var loadedImageURLs: [URL] {
-            return imageRequests.map { $0.url }
-        }
-        private var imageRequests: [(url: URL, completion: (FeedImageDataLoader.Result) -> Void)] = []
-        
-        private struct TaskSpy: FeedImageDataLoaderTask {
-            let cacelCallBack: () -> Void
-            func cancel() {
-                cacelCallBack()
-            }
-        }
-        
-        func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
-            imageRequests.append((url, completion))
-            return TaskSpy { [weak self] in self?.cancelledImageURLs.append(url) }
-        }
-        
-        func completeImageLoading(_ data: Data = Data(), at index: Int) {
-            imageRequests[index].completion(.success(data))
-        }
-        
-        func completeImageLoadingWithError(at index: Int) {
-            let anyError = NSError(domain: "any error", code: 0)
-            imageRequests[index].completion(.failure(anyError))
+            requests[index].send(completion: .failure(anyError))
         }
     }
 }
