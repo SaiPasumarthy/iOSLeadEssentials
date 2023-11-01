@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		9810F3DA2A502A64008A11B9 /* UIView+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810F3D92A502A64008A11B9 /* UIView+TestHelpers.swift */; };
 		9810F4072A5819D4008A11B9 /* CombineHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810F4062A5819D4008A11B9 /* CombineHelpers.swift */; };
+		9810F4AC2AF25545008A11B9 /* CommentsUIIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810F4AB2AF25545008A11B9 /* CommentsUIIntegrationTests.swift */; };
+		9810F4AE2AF2564B008A11B9 /* CommentsUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9810F4AD2AF2564A008A11B9 /* CommentsUIComposer.swift */; };
 		985424892A2C67E90043AED8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985424882A2C67E90043AED8 /* AppDelegate.swift */; };
 		9854248B2A2C67E90043AED8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854248A2A2C67E90043AED8 /* SceneDelegate.swift */; };
 		9854248D2A2C67E90043AED8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9854248C2A2C67E90043AED8 /* ViewController.swift */; };
@@ -69,6 +71,8 @@
 /* Begin PBXFileReference section */
 		9810F3D92A502A64008A11B9 /* UIView+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+TestHelpers.swift"; sourceTree = "<group>"; };
 		9810F4062A5819D4008A11B9 /* CombineHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineHelpers.swift; sourceTree = "<group>"; };
+		9810F4AB2AF25545008A11B9 /* CommentsUIIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsUIIntegrationTests.swift; sourceTree = "<group>"; };
+		9810F4AD2AF2564A008A11B9 /* CommentsUIComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsUIComposer.swift; sourceTree = "<group>"; };
 		985424852A2C67E90043AED8 /* EssentialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EssentialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		985424882A2C67E90043AED8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9854248A2A2C67E90043AED8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +152,7 @@
 				9854248A2A2C67E90043AED8 /* SceneDelegate.swift */,
 				9810F4062A5819D4008A11B9 /* CombineHelpers.swift */,
 				9883B3322A3DED5600945076 /* FeedUIComposer.swift */,
+				9810F4AD2AF2564A008A11B9 /* CommentsUIComposer.swift */,
 				9883B3362A3DED5600945076 /* WeakRefVirtualProxy.swift */,
 				9883B3342A3DED5600945076 /* FeedViewAdapter.swift */,
 				9883B3352A3DED5600945076 /* LoadResourcePresentationAdapter.swift */,
@@ -167,6 +172,7 @@
 				9883B3302A3DEA1200945076 /* SceneDelegateTests.swift */,
 				9883B33E2A3DEDEB00945076 /* FeedUIIntegrationTests.swift */,
 				9883B34E2A3DF39400945076 /* FeedAcceptanceTests.swift */,
+				9810F4AB2AF25545008A11B9 /* CommentsUIIntegrationTests.swift */,
 			);
 			path = EssentialAppTests;
 			sourceTree = "<group>";
@@ -308,6 +314,7 @@
 				9883B33A2A3DED5600945076 /* LoadResourcePresentationAdapter.swift in Sources */,
 				9810F4072A5819D4008A11B9 /* CombineHelpers.swift in Sources */,
 				9854248D2A2C67E90043AED8 /* ViewController.swift in Sources */,
+				9810F4AE2AF2564B008A11B9 /* CommentsUIComposer.swift in Sources */,
 				985424892A2C67E90043AED8 /* AppDelegate.swift in Sources */,
 				9854248B2A2C67E90043AED8 /* SceneDelegate.swift in Sources */,
 				9883B33C2A3DED5600945076 /* WeakRefVirtualProxy.swift in Sources */,
@@ -321,6 +328,7 @@
 			files = (
 				985424CC2A30B0CF0043AED8 /* SharedTestHelpers.swift in Sources */,
 				9883B34F2A3DF39400945076 /* FeedAcceptanceTests.swift in Sources */,
+				9810F4AC2AF25545008A11B9 /* CommentsUIIntegrationTests.swift in Sources */,
 				9883B34D2A3DF11300945076 /* FeedUIIntegrationTests+LoaderSpy.swift in Sources */,
 				985424DC2A360AB30043AED8 /* XCTestCase+FeedImageDataLoader.swift in Sources */,
 				9883B3512A3DFB2600945076 /* HTTPClientStub.swift in Sources */,
