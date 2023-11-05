@@ -73,6 +73,12 @@ extension ListViewController {
         return 0
     }
     
+    func simulateTapOnFeedImage(at row: Int) {
+        let delegate = tableView.delegate
+        let index = IndexPath(row: row, section: feedImageSection)
+        delegate?.tableView?(tableView, didSelectRowAt: index)
+    }
+    
     func feedImageView(at index: Int) -> UITableViewCell? {
         guard numberOfRenderedFeedImageViews() > index else {
             return nil
