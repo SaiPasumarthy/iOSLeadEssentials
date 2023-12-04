@@ -15,6 +15,7 @@ extension FeedUIIntegrationTests {
         // MARK: - FeedLoader
         private var feedRequests: [PassthroughSubject<Paginated<FeedImage>, Error>] = []
         var loadCallCount: Int { return feedRequests.count }
+        private(set) var loadMoreCallCount: Int = 0
         
         func loadPublisher() -> AnyPublisher<Paginated<FeedImage>, Error> {
             let publisher = PassthroughSubject<Paginated<FeedImage>, Error>()
@@ -24,7 +25,9 @@ extension FeedUIIntegrationTests {
         }
         
         func completeFeedLoading(with feed: [FeedImage] = [], at index: Int) {
-            feedRequests[index].send(Paginated(items: feed))
+            feedRequests[index].send(Paginated(items: feed, loadMore: { [weak self] _ in
+                self?.loadMoreCallCount += 1
+            }))
         }
         
         func completeFeedLoadingWithError(at index: Int) {

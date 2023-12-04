@@ -352,6 +352,18 @@ class FeedUIIntegrationTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
+    func test_loadMoreActions_requestLoadMoreFromLoader() {
+        let (sut, loader) = makeSUT()
+        sut.simulateAppearance()
+        loader.completeFeedLoading(at: 0)
+        
+        XCTAssertEqual(loader.loadMoreCallCount, 0)
+
+        sut.simulateLoadMoreFeedAction()
+        
+        XCTAssertEqual(loader.loadMoreCallCount, 1)
+    }
+    
     //MARK: Helpers
     
     func makeSUT(
