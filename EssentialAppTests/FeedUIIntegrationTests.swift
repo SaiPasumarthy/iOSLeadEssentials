@@ -366,6 +366,21 @@ class FeedUIIntegrationTests: XCTestCase {
         sut.simulateLoadMoreFeedAction()
         
         XCTAssertEqual(loader.loadMoreCallCount, 1)
+        
+        loader.completeLoadMore(lastPage: false, at: 0)
+        sut.simulateLoadMoreFeedAction()
+        
+        XCTAssertEqual(loader.loadMoreCallCount, 2)
+        
+        loader.completeLoadMoreWithError(at: 1)
+        sut.simulateLoadMoreFeedAction()
+        
+        XCTAssertEqual(loader.loadMoreCallCount, 3)
+        
+        loader.completeLoadMore(lastPage: true, at: 2)
+        sut.simulateLoadMoreFeedAction()
+        
+        XCTAssertEqual(loader.loadMoreCallCount, 3)
     }
     
     //MARK: Helpers
