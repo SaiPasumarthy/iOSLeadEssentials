@@ -382,6 +382,27 @@ class FeedUIIntegrationTests: XCTestCase {
         
         XCTAssertEqual(loader.loadMoreCallCount, 3)
     }
+    func test_loadingMoreIndicator_isVisibleWhileLoadingMore() {
+        let (sut, loader) = makeSUT()
+        
+        sut.simulateAppearance()
+        XCTAssertEqual(sut.isShowingLoadMoreFeedIndicator, false)
+        
+        loader.completeFeedLoading(at: 0)
+        XCTAssertEqual(sut.isShowingLoadMoreFeedIndicator, false)
+        
+        sut.simulateLoadMoreFeedAction()
+        XCTAssertEqual(sut.isShowingLoadMoreFeedIndicator, true)
+        
+        loader.completeLoadMore(at: 0)
+        XCTAssertEqual(sut.isShowingLoadMoreFeedIndicator, false)
+        
+        sut.simulateLoadMoreFeedAction()
+        XCTAssertEqual(sut.isShowingLoadMoreFeedIndicator, true)
+        
+        loader.completeLoadMoreWithError(at: 1)
+        XCTAssertEqual(sut.isShowingLoadMoreFeedIndicator, false)
+    }
     
     //MARK: Helpers
     
