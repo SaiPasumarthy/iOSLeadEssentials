@@ -24,7 +24,7 @@ class FeedEndpointTests: XCTestCase {
         let image = uniqueImage()
         let baseURL = URL(string: "http://base-url.com")!
 
-        let received = FeedEndpoint.get(image).url(baseURL: baseURL)
+        let received = FeedEndpoint.get(after: image).url(baseURL: baseURL)
 
         XCTAssertEqual(received.scheme, "http", "scheme")
         XCTAssertEqual(received.host, "base-url.com", "host")
