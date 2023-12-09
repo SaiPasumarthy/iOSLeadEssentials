@@ -40,6 +40,7 @@
 		9883B34F2A3DF39400945076 /* FeedAcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9883B34E2A3DF39400945076 /* FeedAcceptanceTests.swift */; };
 		9883B3512A3DFB2600945076 /* HTTPClientStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9883B3502A3DFB2600945076 /* HTTPClientStub.swift */; };
 		9883B3532A3DFB8100945076 /* InMemoryFeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9883B3522A3DFB8100945076 /* InMemoryFeedStore.swift */; };
+		98CDA0DB2B245F42003477F8 /* NullStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CDA0DA2B245F42003477F8 /* NullStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,7 @@
 		9883B34E2A3DF39400945076 /* FeedAcceptanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAcceptanceTests.swift; sourceTree = "<group>"; };
 		9883B3502A3DFB2600945076 /* HTTPClientStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientStub.swift; sourceTree = "<group>"; };
 		9883B3522A3DFB8100945076 /* InMemoryFeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryFeedStore.swift; sourceTree = "<group>"; };
+		98CDA0DA2B245F42003477F8 /* NullStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 			children = (
 				985424882A2C67E90043AED8 /* AppDelegate.swift */,
 				9854248A2A2C67E90043AED8 /* SceneDelegate.swift */,
+				98CDA0DA2B245F42003477F8 /* NullStore.swift */,
 				9810F4062A5819D4008A11B9 /* CombineHelpers.swift */,
 				9883B3322A3DED5600945076 /* FeedUIComposer.swift */,
 				9810F4AD2AF2564A008A11B9 /* CommentsUIComposer.swift */,
@@ -309,6 +312,7 @@
 			files = (
 				9883B33D2A3DED5600945076 /* FeedViewAdapter.swift in Sources */,
 				9883B33A2A3DED5600945076 /* LoadResourcePresentationAdapter.swift in Sources */,
+				98CDA0DB2B245F42003477F8 /* NullStore.swift in Sources */,
 				9810F4072A5819D4008A11B9 /* CombineHelpers.swift in Sources */,
 				9854248D2A2C67E90043AED8 /* ViewController.swift in Sources */,
 				9810F4AE2AF2564B008A11B9 /* CommentsUIComposer.swift in Sources */,
