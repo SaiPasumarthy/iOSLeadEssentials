@@ -33,6 +33,8 @@ extension FeedUIIntegrationTests {
                 
                 return publisher.eraseToAnyPublisher()
             }))
+            
+            feedRequests[index].send(completion: .finished)
         }
         
         func completeFeedLoadingWithError(at index: Int) {

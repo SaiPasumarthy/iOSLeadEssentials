@@ -44,8 +44,13 @@ class FeedUIIntegrationTests: XCTestCase {
         XCTAssertEqual(loader.loadCallCount, 1)
         
         sut.simulateUserInitiatedReload()
+        XCTAssertEqual(loader.loadCallCount, 1)
+        
+        loader.completeFeedLoading(at: 0)
+        sut.simulateUserInitiatedReload()
         XCTAssertEqual(loader.loadCallCount, 2)
         
+        loader.completeFeedLoading(at: 1)
         sut.simulateUserInitiatedReload()
         XCTAssertEqual(loader.loadCallCount, 3)
     }
@@ -312,7 +317,11 @@ class FeedUIIntegrationTests: XCTestCase {
 
         view0?.simulateRetryAction()
         XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url, image0.url])
+        
+        view0?.simulateRetryAction()
+        XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url, image0.url])
 
+        loader.completeImageLoading(at: 1)
         view1?.simulateRetryAction()
         XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url, image0.url, image1.url])
     }
@@ -460,6 +469,28 @@ class FeedUIIntegrationTests: XCTestCase {
         
         loader.completeLoadMoreWithError(at: 1)
         XCTAssertEqual(sut.isShowingLoadMoreFeedIndicator, false)
+    }
+    
+    func test_feedImageView_doesNotLoadImageAgainUntilPreviousRequestCompletes() {
+        let image = makeImage(url: URL(string: "https://any-image-url.com")!)
+        let (sut, loader) = makeSUT()
+
+        sut.simulateAppearance()
+        loader.completeFeedLoading(with: [image], at: 0)
+        
+        sut.simulateFeedImageViewNearVisible(at: 0)
+        XCTAssertEqual(loader.loadedImageURLs, [image.url])
+
+        sut.simulateFeedImageViewVisible(at: 0)
+        XCTAssertEqual(loader.loadedImageURLs, [image.url])
+        
+        loader.completeImageLoading(at: 0)
+        sut.simulateFeedImageViewVisible(at: 0)
+        XCTAssertEqual(loader.loadedImageURLs, [image.url, image.url])
+        
+        sut.simulateFeedImageViewNearNotVisible(at: 0)
+        sut.simulateFeedImageViewVisible(at: 0)
+        XCTAssertEqual(loader.loadedImageURLs, [image.url, image.url, image.url])
     }
     
     //MARK: Helpers
