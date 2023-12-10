@@ -491,6 +491,11 @@ class FeedUIIntegrationTests: XCTestCase {
         sut.simulateFeedImageViewNearNotVisible(at: 0)
         sut.simulateFeedImageViewVisible(at: 0)
         XCTAssertEqual(loader.loadedImageURLs, [image.url, image.url, image.url])
+        
+        sut.simulateLoadMoreFeedAction()
+        loader.completeLoadMore(with: [image, makeImage()], at: 0)
+        sut.simulateFeedImageViewVisible(at: 0)
+        XCTAssertEqual(loader.loadedImageURLs, [image.url, image.url, image.url])
     }
     
     //MARK: Helpers
