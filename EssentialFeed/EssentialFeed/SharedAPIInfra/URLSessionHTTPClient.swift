@@ -7,7 +7,6 @@
 
 import Foundation
 
-#warning("How this production code is free to refactor in the future to use AFNetowrking or to keep using new APIs from URLSession")
 public final class URLSessionHTTPClient: HTTPClient {
     private var session: URLSession
     

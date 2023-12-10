@@ -9,7 +9,6 @@ import Foundation
 
 public final class LocalFeedLoader {
     private let store: FeedStore
-    #warning("Why currentDate is a clousure instead of just Date type let currentDate: Date")
     private let currentDate: () -> Date
 
     public init(store: FeedStore, timestamp: @escaping () -> Date) {
