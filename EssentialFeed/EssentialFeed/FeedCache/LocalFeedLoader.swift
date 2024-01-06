@@ -20,19 +20,18 @@ public final class LocalFeedLoader {
 extension LocalFeedLoader {
     public typealias ValidationResult = Result<Void, Error>
     
+    private struct InvalidCache: Error {}
     public func validateCache(completion: @escaping (ValidationResult) -> Void) {
-        store.retrieval { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .failure:
-                self.store.deleteCachedFeed(with: completion)
-            case let .success(.some(cache)) where !FeedCachePolicy.validate(cache.timestamp, against: self.currentDate()):
-                self.store.deleteCachedFeed(with: completion)
-            case .success:
-                completion(.success(()))
+        
+        completion(ValidationResult {
+            do {
+                if let cache = try store.retrieval(), !FeedCachePolicy.validate(cache.timestamp, against: currentDate()) {
+                    throw InvalidCache()
+                }
+            } catch {
+                try store.deleteCachedFeed()
             }
-        }
+        })
     }
 }
 
@@ -40,24 +39,10 @@ extension LocalFeedLoader: FeedCache {
     public typealias SaveResult = FeedCache.Result
 
     public func save(_ feed: [FeedImage], completion: @escaping (SaveResult) -> Void) {
-        store.deleteCachedFeed { [weak self] deletionResult in
-            guard let self = self else { return }
-            
-            switch deletionResult {
-            case .success:
-                self.cache(feed, with: completion)
-            case let .failure(error):
-                completion(.failure(error))
-            }
-        }
-    }
-    
-    private func cache(_ feed: [FeedImage], with completion: @escaping (SaveResult) -> Void) {
-        self.store.insert(feed.toLocal(), timestamp: self.currentDate()) { [weak self] error in
-            guard self != nil else { return }
-            
-            completion(error)
-        }
+        completion(SaveResult {
+            try store.deleteCachedFeed()
+            try store.insert(feed.toLocal(), timestamp: currentDate())
+        })
     }
 }
 
@@ -65,18 +50,12 @@ extension LocalFeedLoader {
     public typealias LoadResult = Swift.Result<[FeedImage], Error>
 
     public func load(completion: @escaping (LoadResult) -> Void) {
-        store.retrieval { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case let .failure(error):
-                completion(.failure(error))
-            case let .success(.some(cache)) where FeedCachePolicy.validate(cache.timestamp, against: self.currentDate()):
-                completion(.success(cache.images.toModel()))
-            case .success:
-                completion(.success([]))
+        completion(LoadResult {
+            if let cache = try store.retrieval(), FeedCachePolicy.validate(cache.timestamp, against: self.currentDate()) {
+                return cache.images.toModel()
             }
-        }
+            return []
+        })
     }
 }
 

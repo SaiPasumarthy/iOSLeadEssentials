@@ -18,8 +18,8 @@ class ValidateFeedCacheUseCasesTests: XCTestCase {
     func test_validateCache_deleteCacheOnRetrievalError() {
         let (sut, store) = makeSUT()
 
-        sut.validateCache { _ in }
         store.completeRetrieval(with: anyNSError())
+        sut.validateCache { _ in }
         
         XCTAssertEqual(store.receivedMessages, [.retrieval, .deleteCachedFeed])
     }
@@ -50,9 +50,9 @@ class ValidateFeedCacheUseCasesTests: XCTestCase {
         let (sut, store) = makeSUT { fixedCurrentDate }
         let feed = uniqueImageFeed()
         let expirationTimestamp = fixedCurrentDate.minusFeedCacheMaxAge()
+        store.completeRetrieval(with: feed.local, timestamp: expirationTimestamp)
         
         sut.validateCache { _ in }
-        store.completeRetrieval(with: feed.local, timestamp: expirationTimestamp)
         
         XCTAssertEqual(store.receivedMessages, [.retrieval, .deleteCachedFeed])
     }
@@ -131,18 +131,7 @@ class ValidateFeedCacheUseCasesTests: XCTestCase {
             store.completeDeletionSuccessFully()
         }
     }
-    
-    func test_validateCache_doesnotDeleteInvalidCacheAfterSUTInstanceHasBeenDeallocated() {
-        let store = FeedStoreSpy()
-        var sut: LocalFeedLoader? = LocalFeedLoader(store: store, timestamp: Date.init)
         
-        sut?.validateCache { _ in }
-        sut = nil
-        store.completeRetrieval(with: anyNSError())
-        
-        XCTAssertEqual(store.receivedMessages, [.retrieval])
-    }
-    
     //MARK: - Helpers
     
     private func makeSUT(timestamp: @escaping () -> Date = Date.init,
@@ -156,8 +145,7 @@ class ValidateFeedCacheUseCasesTests: XCTestCase {
     }
     
     private func expect(_ sut: LocalFeedLoader, toCompleteWith expectedResult: LocalFeedLoader.ValidationResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
-        let exp = expectation(description: "Wait for load completion")
-        
+        action()
         sut.validateCache { receivedResult in
             switch (receivedResult, expectedResult) {
             case (.success, .success):
@@ -169,12 +157,7 @@ class ValidateFeedCacheUseCasesTests: XCTestCase {
             default:
                 XCTFail("Expected result \(expectedResult), got \(receivedResult) instead", file: file, line: line)
             }
-            
-            exp.fulfill()
-        }
-        
-        action()
-        wait(for: [exp], timeout: 1.0)
+        }        
     }
 }
 
