@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+/*
 public class CodableFeedStore: FeedStore {
     private struct CodableFeedImage: Codable {
         private let id: UUID
@@ -85,3 +85,4 @@ public class CodableFeedStore: FeedStore {
     }
 
 }
+*/

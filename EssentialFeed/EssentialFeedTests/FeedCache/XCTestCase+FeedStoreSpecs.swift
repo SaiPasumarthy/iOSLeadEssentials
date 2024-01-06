@@ -9,7 +9,7 @@ import XCTest
 import EssentialFeed
 
 extension FeedStoreSpecs where Self: XCTestCase {
-    func expect(_ sut: FeedStore, toRetriveTwice expectedResult: FeedStore.RetrievalResult, file: StaticString = #filePath, line: UInt = #line) {
+    func expect(_ sut: FeedStore, toRetriveTwice expectedResult: Result<CacheFeed?, Error>, file: StaticString = #filePath, line: UInt = #line) {
         expect(sut, toRetrive: expectedResult, file: file, line: line)
         expect(sut, toRetrive: expectedResult, file: file, line: line)
     }
@@ -44,6 +44,6 @@ extension FeedStoreSpecs where Self: XCTestCase {
             return .none
         } catch {
             return error
-        }        
+        }
     }
 }
