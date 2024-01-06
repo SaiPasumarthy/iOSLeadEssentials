@@ -122,19 +122,12 @@ class EssentialFeedCacheIntegrationTests: XCTestCase {
     }
     
     private func expect(_ sut: LocalFeedLoader, toLoad expectedFeed: [FeedImage], file: StaticString = #filePath, line: UInt = #line) {
-        let exp = expectation(description: "Waiting for load result")
-        
-        sut.load { result in
-            switch result {
-            case let .success(images):
-                XCTAssertEqual(images, expectedFeed, file: file, line: line)
-            case .failure:
-                XCTFail("Expected success but got \(result) instead", file: file, line: line)
-            }
-            exp.fulfill()
+        do {
+            let images = try sut.load()
+            XCTAssertEqual(images, expectedFeed, file: file, line: line)
+        } catch {
+            XCTFail("Expected success but got \(error) instead", file: file, line: line)
         }
-    
-        wait(for: [exp], timeout: 1.0)
     }
     
     private func save(_ feed: [FeedImage], with loader: LocalFeedLoader, file: StaticString = #filePath, line: UInt = #line) {
