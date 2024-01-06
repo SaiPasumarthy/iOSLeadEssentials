@@ -20,15 +20,60 @@ public protocol FeedStore {
     
     typealias RetrievalResult = Result<CacheFeed?, Error>
     
-    /// The Completion handler can be invoke in any thread
-    /// Clients are responsible to dispatch to appropriate thread, if needed
-    func deleteCachedFeed(with completion: @escaping DeletionCompletion)
+    func deleteCachedFeed() throws
     
-    /// The Completion handler can be invoke in any thread
-    /// Clients are responsible to dispatch to appropriate thread, if needed
+    func insert(_ feed: [LocalFeedImage], timestamp: Date) throws
+
+    func retrieval() throws -> CacheFeed?
+    
+    @available(*, deprecated)
+    func deleteCachedFeed(with completion: @escaping DeletionCompletion)
+
+    @available(*, deprecated)
     func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion)
     
-    /// The Completion handler can be invoke in any thread
-    /// Clients are responsible to dispatch to appropriate thread, if needed
+    @available(*, deprecated)
     func retrieval(with completion: @escaping RetrievalCompletion)
+}
+
+public extension FeedStore {
+    func deleteCachedFeed() throws {
+        let group = DispatchGroup()
+        group.enter()
+        var result: DeletionError!
+        deleteCachedFeed {
+            result = $0
+            group.leave()
+        }
+        group.wait()
+        try result.get()
+    }
+    
+    func insert(_ feed: [LocalFeedImage], timestamp: Date) throws {
+        let group = DispatchGroup()
+        group.enter()
+        var result: InsertionError!
+        insert(feed, timestamp: timestamp) {
+            result = $0
+            group.leave()
+        }
+        group.wait()
+        try result.get()
+    }
+
+    func retrieval() throws -> CacheFeed? {
+        let group = DispatchGroup()
+        group.enter()
+        var result: RetrievalResult!
+        retrieval {
+            result = $0
+            group.leave()
+        }
+        group.wait()
+        return try result.get()
+    }
+
+    func deleteCachedFeed(with completion: @escaping DeletionCompletion) {}
+    func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {}
+    func retrieval(with completion: @escaping RetrievalCompletion) {}
 }
