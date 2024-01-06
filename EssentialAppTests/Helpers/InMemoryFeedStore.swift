@@ -30,13 +30,12 @@ class InMemoryFeedStore: FeedStore, FeedImageDataStore {
         completion(.success(feedCache))
     }
     
-    func insert(data: Data, for url: URL, completion: @escaping (InsertionResult) -> Void) {
+    func insert(data: Data, for url: URL) throws {
         feedImageDataCache[url] = data
-        completion(.success(()))
     }
     
-    func retrieve(dataForURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {
-        completion(.success(feedImageDataCache[url]))
+    func retrieve(dataForURL url: URL) throws -> Data? {
+        feedImageDataCache[url]
     }
     
     static var empty: InMemoryFeedStore {
