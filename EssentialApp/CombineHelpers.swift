@@ -78,7 +78,7 @@ public extension FeedImageDataLoader {
 
  private extension FeedImageDataCache {
      func saveIgnoringResult(_ data: Data, for url: URL) {
-         save(data: data, for: url, completion: { _ in })
+         try? save(data: data, for: url)
      }
  }
 
