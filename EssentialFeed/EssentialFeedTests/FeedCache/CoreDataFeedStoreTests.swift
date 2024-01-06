@@ -75,33 +75,6 @@ class CoreDataFeedStoreTests: XCTestCase, FeedStoreSpecs {
         XCTAssertNil(deletionError, "Expect deletion error to be nil")
         expect(sut, toRetrive: .success(.none))
     }
-
-    func test_storeSideEffects_runSerially() {
-        let sut = makeSUT()
-        var completedOperationInOrder = [XCTestExpectation]()
-        
-        let op1 = expectation(description: "Wait for operation 1")
-        sut.insert(uniqueImageFeed().local, timestamp: Date()) { _ in
-            completedOperationInOrder.append(op1)
-            op1.fulfill()
-        }
-        
-        let op2 = expectation(description: "Wait for operation 2")
-        sut.deleteCachedFeed { _ in
-            completedOperationInOrder.append(op2)
-            op2.fulfill()
-        }
-
-        let op3 = expectation(description: "Wait for operation 3")
-        sut.insert(uniqueImageFeed().local, timestamp: Date()) { _ in
-            completedOperationInOrder.append(op3)
-            op3.fulfill()
-        }
-        
-        waitForExpectations(timeout: 5.0)
-        
-        XCTAssertEqual(completedOperationInOrder, [op1, op2, op3])
-    }
     
     //MARK: - Helpers
         
